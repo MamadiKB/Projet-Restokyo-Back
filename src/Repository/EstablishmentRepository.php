@@ -39,6 +39,23 @@ class EstablishmentRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+    * @return Establishment[] Returns an array of Establishment objects
+    */
+   public function findByType($type): array
+   {
+       return $this->createQueryBuilder('e')
+           ->andWhere('e.type = :type')
+           ->setParameter('type', $type)
+           ->orderBy('e.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+   
+
+
 //    /**
 //     * @return Establishment[] Returns an array of Establishment objects
 //     */

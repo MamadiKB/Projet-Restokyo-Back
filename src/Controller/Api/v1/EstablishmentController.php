@@ -18,10 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EstablishmentController extends AbstractController
 {
+
     /**
      * @Route("/etablissements/liste", name="establishment_get_list", methods={"GET"})
      */
-    public function establishmentsGetList(EstablishmentRepository $establishmentRepository) 
+    public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
         $establishmentsList = $establishmentRepository->findAll();
 
@@ -29,34 +30,36 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/etablissements/{type}/{id}", name="establishment_get_item", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/etablissements/liste/{type}", name="establishment_get_by_type", methods={"GET"})
      * 
      */
-    public function establishmentsGetItem(Establishment $establishment) 
+    public function establishmentsGetItem(Establishment $establishment, EstablishmentRepository $establishmentRepository)
     {
-        return $this->json($establishment, Response::HTTP_OK);
+        $type = $establishment->getType();
+        $establishmentsList = $establishmentRepository->findByType($type);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK);
     }
 
     /**
-     * @Route("/etablissements/{type}/{id}", name="establishment_post", methods={"POST"})
+     * @Route("/etablissements/liste/{type}", name="establishment_post", methods={"POST"})
      */
-    public function establishmentsPostItem() 
-    {
-        #
-    }
-
-    /**
-     * @Route("/etablissements/{type}/{id}", name="establishment_put", methods={"PUT"})
-     */
-    public function establishmentsPutItem() 
+    public function establishmentsPostItem()
     {
         #
     }
 
     /**
-     * @Route("/etablissements/{type}/{id}", name="establishment_delete", methods={"DELETE"})
+     * @Route("/etablissements/liste/{type}", name="establishment_put", methods={"PUT"})
      */
-    public function establishmentsDeleteItem() 
+    public function establishmentsPutItem()
+    {
+        #
+    }
+
+    /**
+     * @Route("/etablissements/liste/{type}", name="establishment_delete", methods={"DELETE"})
+     */
+    public function establishmentsDeleteItem()
     {
         #
     }
@@ -72,6 +75,4 @@ class EstablishmentController extends AbstractController
 
         return $this->json($establishment, Response::HTTP_OK);
     }
-
-
 }
