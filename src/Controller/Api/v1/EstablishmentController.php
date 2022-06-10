@@ -20,7 +20,7 @@ class EstablishmentController extends AbstractController
 {
 
     /**
-     * @Route("/etablissements/liste", name="establishment_get_list", methods={"GET"})
+     * @Route("/etablissements", name="establishment_get_list", methods={"GET"})
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
