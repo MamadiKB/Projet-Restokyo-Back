@@ -39,6 +39,11 @@ class Establishment
     private $address;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $district;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
@@ -240,6 +245,26 @@ class Establishment
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of district
+     */ 
+    public function getDistrict()
+    {
+        return $this->district;
+    }
+
+    /**
+     * Set the value of district
+     *
+     * @return  self
+     */ 
+    public function setDistrict($district)
+    {
+        $this->district = $district;
 
         return $this;
     }

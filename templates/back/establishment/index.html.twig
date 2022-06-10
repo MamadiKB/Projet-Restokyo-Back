@@ -1,4 +1,4 @@
-{% extends 'back/base_back.html.twig' %}
+{% extends 'back/menu.html.twig' %}
 
 {% block title %}Liste des films{% endblock %}
 
@@ -8,7 +8,7 @@
 
     <a href="{{ path('back_establishment_new') }}" class="btn btn-primary mb-2">Ajouter un film</a>
 
-    {{ include('_flash_messages.html.twig') }}
+    {# {{ include('_flash_messages.html.twig') }} #}
 
     <table class="table table-striped table-hover">
         <thead>
@@ -16,8 +16,8 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Photo</th>
-                <th> <a href="{{ path('back_establishment_listByType') }}">Type</a></th>
-                <th><a href="{{ path('back_establishment_listByDistrict') }}">Quartier</a></th>
+                 <th><a href="{# {{ path('back_establishment_listByType') }} #}">Type</a></th>
+                 <th><a href="{# {{ path('back_establishment_listByDistrict') }} #}">Quartier</a></th> 
                 <th>Note</th>
                 <th>actions</th>
             </tr>
@@ -27,7 +27,7 @@
             <tr>
                 <td>{{ establishment.id }}</td>
                 <td>{{ establishment.name }}</td>
-                <td><img src="{{ establishment.poster }}" height="40"></td>
+                <td><img src="{{ establishment.picture }}" height="40"></td>
                 <td>{{ establishment.type }}</td>
                 <td>{{ establishment.district }}</td>
                 <td>{{ establishment.rating }}</td>

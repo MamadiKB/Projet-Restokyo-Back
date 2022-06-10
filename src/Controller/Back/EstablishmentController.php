@@ -57,7 +57,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/new", name="back_establishment_new", methods={"GET", "POST"})
+     * @Route("/new", name="back_establishment_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EstablishmentRepository $establishmentRepository): Response
     {
@@ -78,7 +78,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}", name="back_establishment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {
