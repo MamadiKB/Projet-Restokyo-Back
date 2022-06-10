@@ -1,0 +1,52 @@
+{% extends 'back/base_back.html.twig' %}
+
+{% block title %}Liste des films{% endblock %}
+
+{% block body_back %}
+
+    <h1>Liste des films</h1>
+
+    <a href="{{ path('back_movie_new') }}" class="btn btn-primary mb-2">Ajouter un film</a>
+
+    {{ include('_flash_messages.html.twig') }}
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Date de sortie</th>
+                <th>Durée</th>
+                <th>Affiche</th>
+                <th>Type</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for movie in movies %}
+            <tr>
+                <td>{{ movie.id }}</td>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.releaseDate ? movie.releaseDate|date('Y') : '' }}</td>
+                <td class="text-end">{{ movie.duration }} min</td>
+                <td><img src="{{ movie.poster }}" height="40"></td>
+                <td>{{ movie.type }}</td>
+                <td>{{ movie.rating }}</td>
+                <td>
+                    <a href="{{ path('back_movie_show', {'id': movie.id}) }}" class="btn btn-sm btn-primary">show</a>
+                    <a href="{{ path('back_movie_edit', {'id': movie.id}) }}" class="btn btn-sm btn-success">edit</a>
+                    {% if movie.type == 'Série' %}
+                    <a href="{{ path('back_season_index', {'id': movie.id}) }}" class="btn btn-sm btn-warning">saisons</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

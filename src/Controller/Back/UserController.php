@@ -2,59 +2,105 @@
 
 namespace App\Controller\Back;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @Route("/back/user")
+ */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/back/profils/list", name="back_user_list", methods={"GET"})
+     * @Route("", name="back_user_index", methods={"GET"})
      */
-    public function list(): Response
+    public function index(UserRepository $userRepository): Response
     {
         return $this->render('back/user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'users' => $userRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/back/profils/{username}", name="back_user_show", methods={"GET"})
+     * @Route("/new", name="back_user_new", methods={"GET", "POST"})
      */
-    public function show(): Response
+    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        return $this->render('back/user/index.html.twig', [
-            'controller_name' => 'UserController',
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            // On doit hacher le mot de passe
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            // On l'écrase dans le $user
+            $user->setPassword($hashedPassword);
+
+            $userRepository->add($user);
+            return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/user/new.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/back/profils/ajouter", name="back_user_add", methods={"GET", "POST"})
+     * @Route("/{id}", name="back_user_show", methods={"GET"})
      */
-    public function add(): Response
+    public function show(User $user): Response
     {
-        return $this->render('back/user/index.html.twig', [
-            'controller_name' => 'UserController',
+        return $this->render('back/user/show.html.twig', [
+            'user' => $user,
         ]);
     }
 
     /**
-     * @Route("/back/profils/{username}/editer", name="back_user_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})
      */
-    public function edit(): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
-        return $this->render('back/user/index.html.twig', [
-            'controller_name' => 'UserController',
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Si mot de passe présent dans le formulaire,
+            // on hâche
+            $passwordInForm = $form->get('password')->getData();
+            if ($passwordInForm) {
+                // On doit hacher le mot de passe
+                $hashedPassword = $passwordHasher->hashPassword($user, $passwordInForm);
+                // On l'écrase dans le $user
+                $user->setPassword($hashedPassword);
+            }
+
+            $userRepository->add($user);
+            return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/back/profils/{username}/supprimer", name="back_user_delete", methods={"POST"})
+     * @Route("/{id}", name="back_user_delete", methods={"POST"})
      */
-    public function delete(): Response
+    public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        return $this->render('back/user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $userRepository->remove($user);
+        }
+
+        return $this->redirectToRoute('back_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }
