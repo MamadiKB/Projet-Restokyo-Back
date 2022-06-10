@@ -60,7 +60,6 @@ class EstablishmentController extends AbstractController
         $errors = $validator->validate($establishment);
 
         if (count($errors) > 0) {
-
             $cleanErrors = [];
 
             /** @var ConstraintViolation $error */

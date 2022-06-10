@@ -440,7 +440,7 @@ class RestokyoProvider
         'Western',
     ];
 
-    private $district = [
+    private $districts = [
         'Ikebukuro',
         'Ueno',
         'Asakusa',
@@ -476,6 +476,6 @@ class RestokyoProvider
      */
     public function districtsName()
     {
-        return $this->district[array_rand($this->district)];
+        return $this->districts[array_rand($this->districts)];
     }
 }

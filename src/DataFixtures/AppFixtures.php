@@ -114,6 +114,9 @@ class AppFixtures extends Fixture
             $establishment->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300');
             $establishment->setRating($faker->randomFloat(1, 1, 5));
 
+            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
+            $establishment->setDistrict($randomDistrict);
+
 
             //!\ TAGS to ESTABLISHMENTS
             //TODO To activate when relation is done
