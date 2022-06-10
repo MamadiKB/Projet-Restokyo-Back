@@ -52,7 +52,7 @@ class AppFixtures extends Fixture
         $establishement->setName('Chatty Chatty');
         $establishement->setType('Restaurant');
         $establishement->setDescription("Ne cherchez plus, c/'est le meilleur burger de Tokyo !");
-        $establishement->setAdress('1 Chome-12-1 Shinjuku, Shinjuku City, Tokyo 160-0022');
+        $establishement->setAddress('1 Chome-12-1 Shinjuku, Shinjuku City, Tokyo 160-0022');
         $establishement->setOpeningDays('Du lundi au dimanche');
 
         $manager->persist($establishement);

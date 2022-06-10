@@ -2,6 +2,7 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\District;
 use App\Entity\Establishment;
 use App\Form\EstablishmentType;
 use App\Repository\EstablishmentRepository;
@@ -22,27 +23,27 @@ class EstablishmentController extends AbstractController
     public function index(EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'establishment' => $establishmentRepository->findAll(),
+            'establishments' => $establishmentRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
+     * @Route("/{Type}", name="back_establishment_listByType", methods={"GET"})
      */
     public function listByType(EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+            'establishments' => $establishmentRepository,
         ]);
     }
 
     /**
-     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"})
+     * @Route("/{District}", name="back_establishment_listByDistrict", methods={"GET"})
      */
-    public function listByDistrict(EstablishmentRepository $establishmentRepository): Response
+    public function listByDistrict(District $district, EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+            'establishments' => $establishmentRepository,            
         ]);
     }
 
@@ -57,7 +58,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/ajouter", name="back_establishment_new", methods={"GET", "POST"})
+     * @Route("/{id}/new", name="back_establishment_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
     {
@@ -78,7 +79,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/editer", name="back_establishment_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
     {
@@ -98,7 +99,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/supprimer", name="back_establishment_delete", methods={"POST"})
+     * @Route("/{id}", name="back_establishment_delete", methods={"POST"})
      */
     public function delete(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {

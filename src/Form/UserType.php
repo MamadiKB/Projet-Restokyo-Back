@@ -22,16 +22,16 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
             ])
-            ->add('username')
-            ->add('lastname')
-            ->add('firstname')
+            ->add('username', TextType::class)
+            ->add('lastname', TextType::class)
+            ->add('firstname', TextType::class)
             ->add('birthdate', DateType::class, [
                 //'years' => range(date('Y'), date('Y') - 100),
                 // De la date courante jusqu'à la date du premier film
                 'years' => range(date('Y') + 5, 1895),
-                
+
             ])
-            ->add('nationality')
+            ->add('nationality', TextType::class)
             ->add('picture')
             ->add('roles', ChoiceType::class, [
                 'label' => 'Rôles',

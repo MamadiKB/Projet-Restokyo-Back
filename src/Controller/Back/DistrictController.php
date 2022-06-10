@@ -25,7 +25,7 @@ class DistrictController extends AbstractController
     public function index(DistrictRepository $districtRepository): Response
     {
         return $this->render('back/district/index.html.twig', [
-            'district' => $districtRepository->findAll(),
+            'districts' => $districtRepository->findAll(),
         ]);
     }
 
