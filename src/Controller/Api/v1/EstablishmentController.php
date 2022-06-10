@@ -24,7 +24,7 @@ class EstablishmentController extends AbstractController
 {
 
     /**
-     * @Route("/etablissements", name="establishments_get_list", methods={"GET"})
+     * @Route("/establishments", name="establishments_get_list", methods={"GET"})
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
@@ -34,20 +34,9 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/etablissements/{type}", name="establishment_get_by_type", methods={"GET"})
-     * 
+     * @Route("/establishments/{id}", name="establishment_get_data", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function establishmentsGetListByType(Establishment $establishment, EstablishmentRepository $establishmentRepository)
-    {
-        $type = $establishment->getType();
-        $establishmentsList = $establishmentRepository->findByType($type);
-        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK);
-    }
-
-    /**
-     * @Route("/etablissements/{id}", name="establishment_get_data", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function establishmentsGetData(Establishment $establishment)
+    public function establishmentsGetData(Establishment $establishment = null)
     {
         
         if ($establishment === null) {
@@ -58,7 +47,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/etablissements/ajouter", name="establishment_get_data", methods={"POST"}, requirements={"id"="\d+"})
+     * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
      */
     public function establishmentsPostItem(Request $request,
     SerializerInterface $serializer,
@@ -98,5 +87,16 @@ class EstablishmentController extends AbstractController
                 )
             ]
         );
+    }
+
+    /**
+     * @Route("/establishments/{type}", name="establishment_get_by_type", methods={"GET"})
+     * 
+     */
+    public function establishmentsGetListByType(Establishment $establishment, EstablishmentRepository $establishmentRepository)
+    {
+        $type = $establishment->getType();
+        $establishmentsList = $establishmentRepository->findByType($type);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK);
     }
 }
