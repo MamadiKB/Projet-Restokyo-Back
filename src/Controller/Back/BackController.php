@@ -11,7 +11,7 @@ class BackController extends AbstractController
     /**
      * @Route("/back", name="back_back_menu")
      */
-    public function index(): Response
+    public function home(): Response
     {
         return $this->render('back/menu.html.twig', [
             'controller_name' => 'BackController',

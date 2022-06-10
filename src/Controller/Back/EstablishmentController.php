@@ -6,7 +6,6 @@ use App\Entity\District;
 use App\Entity\Establishment;
 use App\Form\EstablishmentType;
 use App\Repository\EstablishmentRepository;
-use App\Service\MySlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +39,7 @@ class EstablishmentController extends AbstractController
     /**
      * @Route("/{District}", name="back_establishment_listByDistrict", methods={"GET"})
      */
-    public function listByDistrict(District $district, EstablishmentRepository $establishmentRepository): Response
+    public function listByDistrict(EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
             'establishments' => $establishmentRepository,            
@@ -60,7 +59,7 @@ class EstablishmentController extends AbstractController
     /**
      * @Route("/{id}/new", name="back_establishment_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
+    public function new(Request $request, EstablishmentRepository $establishmentRepository): Response
     {
         $establishment = New Establishment();
         $form = $this->createForm(EstablishmentType::class, $establishment);
@@ -81,7 +80,7 @@ class EstablishmentController extends AbstractController
     /**
      * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
+    public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {
         $form = $this->createForm(EstablishmentType::class, $establishment);
         $form->handleRequest($request);
