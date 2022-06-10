@@ -19,6 +19,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -29,11 +30,13 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank
      */
     private $address;
 

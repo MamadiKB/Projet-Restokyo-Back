@@ -150,6 +150,7 @@ class AppFixtures extends Fixture
             // $establishement->setAddress('1 Chome-12-1 Shinjuku, Shinjuku City, Tokyo 160-0022');
             // $establishement->setOpeningDays('Du lundi au dimanche');
 
+
             // $manager->persist($establishement);
 
             // // quartiers

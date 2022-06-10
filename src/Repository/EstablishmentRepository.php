@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Establishment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,6 +49,20 @@ class EstablishmentRepository extends ServiceEntityRepository
        return $this->createQueryBuilder('e')
            ->andWhere('e.type = :type')
            ->setParameter('type', $type)
+           ->orderBy('e.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+    /**
+    * @return Establishment[] Returns an array of Establishment objects
+    */
+   public function findByDistrict($district): array
+   {
+       return $this->createQueryBuilder('e')
+           ->andWhere('e.district = :district')
+           ->setParameter('district', $district)
            ->orderBy('e.id', 'ASC')
            ->setMaxResults(10)
            ->getQuery()

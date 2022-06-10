@@ -2,7 +2,13 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\District;
+use App\Entity\Establishment;
+use App\Form\EstablishmentType;
+use App\Repository\EstablishmentRepository;
+use App\Service\MySlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,89 +18,96 @@ use Symfony\Component\Routing\Annotation\Route;
 class EstablishmentController extends AbstractController
 {
     /**
-     * @Route("", name="back_establishment_list", methods={"GET"})
+     * @Route("", name="back_establishment_index", methods={"GET"})
      */
-    public function list(): Response
+    public function index(EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+            'establishments' => $establishmentRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
+     * @Route("/{Type}", name="back_establishment_listByType", methods={"GET"})
      */
-    public function listByType(): Response
+    public function listByType(EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+            'establishments' => $establishmentRepository,
         ]);
     }
 
     /**
-     * @Route("/{type}/{slug}", name="back_establishment_show", methods={"GET"})
+     * @Route("/{District}", name="back_establishment_listByDistrict", methods={"GET"})
      */
-    public function show(): Response
+    public function listByDistrict(District $district, EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+            'establishments' => $establishmentRepository,            
         ]);
     }
 
     /**
-     * @Route("/{type}/ajouter", name="back_establishment_add", methods={"GET", "POST"})
+     * @Route("/{id}", name="back_establishment_show", methods={"GET"})
      */
-    public function add(): Response
+    public function show(Establishment $establishment): Response
     {
-        return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+        return $this->render('back/establishment/show.html.twig', [
+            'establishment' => $establishment,
         ]);
     }
 
     /**
-     * @Route("/{type}/editer", name="back_establishment_edit", methods={"GET", "POST"})
+     * @Route("/{id}/new", name="back_establishment_new", methods={"GET", "POST"})
      */
-    public function edit(): Response
+    public function new(Request $request, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
     {
-        return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+        $establishment = New Establishment();
+        $form = $this->createForm(EstablishmentType::class, $establishment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $establishmentRepository->add($establishment);
+            $this->addFlash('success', 'L\'établissement à été ajouté.');
+            return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/establishment/new.html.twig', [
+            'establisment' => $establishment,
+            'form' => $form,
         ]);
     }
 
     /**
-     * @Route("/{type}/supprimer", name="back_establishment_delete", methods={"POST"})
+     * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
      */
-    public function delete(): Response
+    public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository, MySlugger $mySlugger): Response
     {
-        return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
+        $form = $this->createForm(EstablishmentType::class, $establishment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $establishmentRepository->add($establishment);
+            $this->addFlash('success', 'L\'établissement à été ajouté.');
+            return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/establishment/new.html.twig', [
+            'establisment' => $establishment,
+            'form' => $form,
         ]);
     }
 
     /**
-     * 
-     * Method used to consultate the establishments' propositions by users validate (or invalidate) an establishment submitted by user
-     * 
-     * @Route("/nouveau/liste", name="back_establishment_new_list", methods={"GET"})
+     * @Route("/{id}", name="back_establishment_delete", methods={"POST"})
      */
-    public function newEstablishmentList(): Response
+    public function delete(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {
-        return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
-        ]);
-    }
+        if ($this->isCsrfTokenValid('delete'.$establishment->getId(), $request->request->get('_token'))) {
+            $establishmentRepository->remove($establishment);
+            $this->addFlash('success', 'L\'établissement à été supprimé.');
+        }
 
-    /**
-     * 
-     * Method designed to validate (or invalidate) an establishment submitted by user
-     * 
-     * @Route("/nouveau/liste", name="back_establishment_new_handle", methods={"GET", "POST"})
-     */
-    public function handleProposition(): Response
-    {
-        return $this->render('back/establishment/index.html.twig', [
-            'controller_name' => 'EstablishmentController',
-        ]);
+        return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }
