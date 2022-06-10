@@ -64,7 +64,7 @@
 | ------------------------------------ | ------------ | ----------------------------- | ----------------------------- | ---------- | ---------------------------------- |
 | `/api/v1/etablissements`             | `GET`        | `Api/EstablishmentController` | `establishmentsGetList`       | -          | Establishments list                |
 | `/api/v1/etablissements/{type}`      | `GET`        | `Api/EstablishmentController` | `establishmentsGetListByType` | -          | Establishments list by type        |
-| `/api/v1/etablissements/{type}/{id}` | `GET`        | `Api/EstablishmentController` | `establishmentsGetItem`       | -          | Recovery of an establishment by id |
+| `/api/v1/etablissements/{id}` | `GET`        | `Api/EstablishmentController` | `establishmentsGetItem`       | -          | Recovery of an establishment by id |
 | `/api/v1/etablissements/ajouter`     | `GET`        | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To go to the proposition form      |
 | `/api/v1/etablissements/ajouter`     | `POST`       | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To propose an establishement       |
 | `/api/v1/tags`                       | `GET`        | `Api/TagController`           | `tagGetList`                  | -          | Tags list                          |
