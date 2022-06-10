@@ -5,7 +5,6 @@ namespace App\Controller\Back;
 use App\Entity\District;
 use App\Form\DistrictType;
 use App\Repository\DistrictRepository;
-use App\Service\MySlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +47,7 @@ class DistrictController extends AbstractController
      * 
      * @Route("/new", name="back_district_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, DistrictRepository $districtRepository, MySlugger $mySlugger): Response
+    public function new(Request $request, DistrictRepository $districtRepository): Response
     {
         $district = new District();
         $form = $this->createForm(DistrictType::class, $district);
@@ -73,7 +72,7 @@ class DistrictController extends AbstractController
      * 
      * @Route("/{id}/edit", name="back_district_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, District $district, DistrictRepository $districtRepository, MySlugger $mySlugger): Response
+    public function edit(Request $request, District $district, DistrictRepository $districtRepository): Response
     {
         $form = $this->createForm(DistrictType::class, $district);
         $form->handleRequest($request);
