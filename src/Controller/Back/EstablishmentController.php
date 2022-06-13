@@ -27,19 +27,31 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{Type}", name="back_establishment_listByType", methods={"GET"})
+     * @Route("/orderbytype", name="back_establishment_orderByTypeASC", methods={"GET"})
      */
-    public function listByType(EstablishmentRepository $establishmentRepository): Response
+    public function orderByType( EstablishmentRepository $establishmentRepository): Response
     {
+        $orderByTypeList = $establishmentRepository->findAllOrderedByTypeAsc();
         return $this->render('back/establishment/index.html.twig', [
-            'establishments' => $establishmentRepository,
+            'establishments' => $orderByTypeList,
+        ]);
+    }
+    /**
+     * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
+     */
+    public function listByType(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    {
+        $type = $establishment->getType();
+        $establishmentByType = $establishmentRepository->findByType($type);
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $establishmentByType,
         ]);
     }
 
     /**
-     * @Route("/{District}", name="back_establishment_listByDistrict", methods={"GET"})
+     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"})
      */
-    public function listByDistrict(EstablishmentRepository $establishmentRepository): Response
+    public function listByDistrict( EstablishmentRepository $establishmentRepository): Response
     {
         return $this->render('back/establishment/index.html.twig', [
             'establishments' => $establishmentRepository,            
