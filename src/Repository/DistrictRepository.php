@@ -21,7 +21,7 @@ class DistrictRepository extends ServiceEntityRepository
         parent::__construct($registry, District::class);
     }
 
-    public function add(District $entity, bool $flush = false): void
+    public function add(District $entity, bool $flush = true): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class DistrictRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(District $entity, bool $flush = false): void
+    public function remove(District $entity, bool $flush = true): void
     {
         $this->getEntityManager()->remove($entity);
 

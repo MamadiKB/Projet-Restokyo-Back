@@ -23,7 +23,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Establishment::class);
     }
 
-    public function add(Establishment $entity, bool $flush = false): void
+    public function add(Establishment $entity, bool $flush = true): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -32,7 +32,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Establishment $entity, bool $flush = false): void
+    public function remove(Establishment $entity, bool $flush = true): void
     {
         $this->getEntityManager()->remove($entity);
 
