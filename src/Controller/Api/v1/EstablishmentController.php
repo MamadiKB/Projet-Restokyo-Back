@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
@@ -25,12 +26,14 @@ class EstablishmentController extends AbstractController
 
     /**
      * @Route("/establishments", name="establishments_get_list", methods={"GET"})
+     * 
+     * 
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
         $establishmentsList = $establishmentRepository->findAll();
 
-        return $this->json(['establishmentsList' => $establishmentsList, Response::HTTP_OK]);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
 
     /**
@@ -43,7 +46,7 @@ class EstablishmentController extends AbstractController
             return $this->json(['error' => 'Etablissement inexistant (pour le moment !)'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($establishment, Response::HTTP_OK);
+        return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_data']);
     }
 
     /**
@@ -60,7 +63,6 @@ class EstablishmentController extends AbstractController
         $errors = $validator->validate($establishment);
 
         if (count($errors) > 0) {
-
             $cleanErrors = [];
 
             /** @var ConstraintViolation $error */
@@ -85,7 +87,7 @@ class EstablishmentController extends AbstractController
                     'id' => $establishment->getId()
                     ]
                 )
-            ]
+            ], ['groups' => 'establishments_get_list']
         );
     }
 
@@ -93,10 +95,11 @@ class EstablishmentController extends AbstractController
      * @Route("/establishments/{type}", name="establishment_get_by_type", methods={"GET"})
      * 
      */
-    public function establishmentsGetListByType(Establishment $establishment, EstablishmentRepository $establishmentRepository)
+    public function establishmentsGetListByType(Establishment $establishment,
+    EstablishmentRepository $establishmentRepository)
     {
         $type = $establishment->getType();
         $establishmentsList = $establishmentRepository->findByType($type);
-        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
 }

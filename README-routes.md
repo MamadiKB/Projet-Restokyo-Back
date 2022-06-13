@@ -60,19 +60,19 @@
 
 ## API
 
-| URL                                  | Méthode HTTP | Contrôleur                    | Méthode                       | Titre HTML | Commentaire                        |
-| ------------------------------------ | ------------ | ----------------------------- | ----------------------------- | ---------- | ---------------------------------- |
-| `/api/v1/etablissements`             | `GET`        | `Api/EstablishmentController` | `establishmentsGetList`       | -          | Establishments list                |
-| `/api/v1/etablissements/{type}`      | `GET`        | `Api/EstablishmentController` | `establishmentsGetListByType` | -          | Establishments list by type        |
-| `/api/v1/etablissements/{id}` | `GET`        | `Api/EstablishmentController` | `establishmentsGetItem`       | -          | Recovery of an establishment by id |
-| `/api/v1/etablissements/ajouter`     | `GET`        | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To go to the proposition form      |
-| `/api/v1/etablissements/ajouter`     | `POST`       | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To propose an establishement       |
-| `/api/v1/tags`                       | `GET`        | `Api/TagController`           | `tagGetList`                  | -          | Tags list                          |
-| `/api/v1/tags/{id}`                  | `GET`        | `Api/TagController`           | `establishmentsByTag`         | -          | List of establishments by tag      |
-| `/api/v1/districts`                  | `GET`        | `Api/DistrictController`      | `districtGetList`             | -          | Districts list                     |
-| `/api/v1/districts/{id}`             | `GET`        | `Api/DistrictController`      | `establishmentsByDistrict`    | -          | List of establishments by district |
-| `/api/v1/profils/ajouter`            | `POST`       | `Api/UserController`          | `userPostlist`                | -          | Create a new user                  |
-| `/api/v1/profils/{id}`               | `GET`        | `Api/UserController`          | `userGetItem`                 | -          | Recovery of a user by id           |
-| `/api/v1/profils/{id}`               | `PUT`        | `Api/UserController`          | `userPutItem`                 | -          | Edit a user by id                  |
-| `/api/v1/profils/{id}`               | `DELETE`     | `Api/UserController`          | `userDeleteItem`              | -          | Delete an user by id                |
-| `/api/v1/connexion`                  | `POST`       | `Api/SecurityController`      | `login`                       | -          | Connection of an user              |
+| URL                              | Méthode HTTP | Contrôleur                    | Méthode                       | Titre HTML | Commentaire                        |
+| -------------------------------- | ------------ | ----------------------------- | ----------------------------- | ---------- | ---------------------------------- |
+| `/api/v1/etablissements`         | `GET`        | `Api/EstablishmentController` | `establishmentsGetList`       | -          | Establishments list                |
+| `/api/v1/etablissements/{type}`  | `GET`        | `Api/EstablishmentController` | `establishmentsGetListByType` | -          | Establishments list by type        |
+| `/api/v1/etablissements/{id}`    | `GET`        | `Api/EstablishmentController` | `establishmentsGetItem`       | -          | Recovery of an establishment by id |
+| `/api/v1/etablissements/ajouter` | `GET`        | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To go to the proposition form      |
+| `/api/v1/etablissements/ajouter` | `POST`       | `Api/EstablishmentController` | `establishmentsPostItem`      | -          | To propose an establishement       |
+| `/api/v1/tags`                   | `GET`        | `Api/TagController`           | `tagGetList`                  | -          | Tags list                          |
+| `/api/v1/tags/{id}`              | `GET`        | `Api/TagController`           | `establishmentsByTag`         | -          | List of establishments by tag      |
+| `/api/v1/districts`              | `GET`        | `Api/DistrictController`      | `districtGetList`             | -          | Districts list                     |
+| `/api/v1/districts/{id}`         | `GET`        | `Api/DistrictController`      | `establishmentsByDistrict`    | -          | List of establishments by district |
+| `/api/v1/profils/ajouter`        | `POST`       | `Api/UserController`          | `userPostlist`                | -          | Create a new user                  |
+| `/api/v1/profils/{id}`           | `GET`        | `Api/UserController`          | `userGetItem`                 | -          | Recovery of a user by id           |
+| `/api/v1/profils/{id}`           | `PUT`        | `Api/UserController`          | `userPutItem`                 | -          | Edit a user by id                  |
+| `/api/v1/profils/{id}`           | `DELETE`     | `Api/UserController`          | `userDeleteItem`              | -          | Delete an user by id               |
+| `/api/v1/connexion`              | `POST`       | `Api/SecurityController`      | `login`                       | -          | Connection of an user              |
