@@ -121,10 +121,10 @@ class AppFixtures extends Fixture
             //!\ TAGS to ESTABLISHMENTS
             //TODO To activate when relation is done
             // Adding 1 to 3 tags to each establishment
-            // for ($t = 1; $t <= mt_rand(1, 3); $t++) {
-            //     $randomTag = $tagsList[mt_rand(0, count($tagsList) - 1)];
-            //     $establishment->addTag($randomTag);
-            // }
+            for ($t = 1; $t <= mt_rand(1, 3); $t++) {
+                $randomTag = $tagsList[mt_rand(0, count($tagsList) - 1)];
+                $establishment->addTag($randomTag);
+            }
 
             //!\ COMMENTS (and ratings) to ESTABLISHMENTS
             //TODO To activate when relation is done 
