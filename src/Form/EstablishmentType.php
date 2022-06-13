@@ -43,20 +43,21 @@ class EstablishmentType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
             ])
-            ->add('noon_opening_time', DateInterval::class, [
-                'choices' => [
-                    'hours' => array_combine(range(1, 24), range(1, 24)),
-                ],
-            ])
+            // ->add('noon_opening_time', DateInterval::class, [
+            //     'choices' => [
+            //         'hours' => array_combine(range(1, 24), range(1, 24)),
+            //     ],
+            // ])
             ->add('evening_opening_time')
             ->add('website', UrlType::class)
             ->add('phone', IntegerType::class)
-            ->add('picture', FileType::class, [
-                'multiple'    => false,
-                'attr' => array(
-                    'accept' => 'image/*',
-                    )
-                ]);
+            // ->add('picture', FileType::class, [
+            //     'multiple'    => false,
+            //     'attr' => array(
+            //         'accept' => 'image/*',
+            //         )
+                // ])
+                ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

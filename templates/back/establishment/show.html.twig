@@ -1,56 +1,40 @@
 {% extends 'back/menu.html.twig' %}
 
-{% block title %}{{ movie.title }}{% endblock %}
+{% block title %}{{ establishment.name }}{% endblock %}
 
 {% block body_back %}
 
-    <h1>{{ movie.title }}</h1>
+    <h1>{{ establishment.name }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ movie.id }}</td>
+                <td>{{ establishment.id }}</td>
             </tr>
             <tr>
                 <th>Title</th>
-                <td>{{ movie.title }}</td>
+                <td>{{ establishment.name }}</td>
             </tr>
             <tr>
-                <th>ReleaseDate</th>
-                <td>{{ movie.releaseDate ? movie.releaseDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duration</th>
-                <td>{{ movie.duration }}</td>
-            </tr>
-            <tr>
-                <th>Poster</th>
-                <td><img src="{{ movie.poster }}"></td>
+                <th>Picture</th>
+                <td><img src="{{ establishment.picture }}"></td>
             </tr>
             <tr>
                 <th>Type</th>
-                <td>{{ movie.type }}</td>
-            </tr>
-            <tr>
-                <th>Summary</th>
-                <td>{{ movie.summary }}</td>
-            </tr>
-            <tr>
-                <th>Synopsis</th>
-                <td>{{ movie.synopsis }}</td>
+                <td>{{ establishment.type }}</td>
             </tr>
             <tr>
                 <th>Rating</th>
-                <td>{{ movie.rating }}</td>
+                <td>{{ establishment.rating }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('back_movie_index') }}" class="btn btn-primary">back to list</a>
+    <a href="{{ path('back_establishment_index') }}" class="btn btn-primary">back to list</a>
     
-    <a href="{{ path('back_movie_edit', {'id': movie.id}) }}" class="btn btn-success">edit</a>
+    <a href="{{ path('back_establishment_edit', {'id': establishment.id}) }}" class="btn btn-success">edit</a>
 
-    {{ include('back/movie/_delete_form.html.twig') }}
+    {{ include('back/establishment/_delete_form.html.twig') }}
 
 {% endblock %}
