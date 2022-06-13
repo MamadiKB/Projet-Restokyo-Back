@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
@@ -25,6 +26,8 @@ class EstablishmentController extends AbstractController
 
     /**
      * @Route("/establishments", name="establishments_get_list", methods={"GET"})
+     * 
+     * 
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {

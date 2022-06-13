@@ -7,9 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
+ * 
+ * @ORM\HasLifecycleCallbacks()
+ * 
+ * 
  */
 class Establishment
 {
@@ -17,71 +22,85 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"districts_get_establishments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"districts_get_establishments"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"districts_get_establishments"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Groups({"districts_get_establishments"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $opening_days;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $noon_opening_time;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $evening_opening_time;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"districts_get_establishments"})
      */
     private $picture;
 

@@ -22,7 +22,7 @@ class DistrictController extends AbstractController
     {
         $districtsList = $districtRepository->findAll();
 
-        return $this->json(['districts' => $districtsList], Response::HTTP_OK);
+        return $this->json(['districts' => $districtsList], Response::HTTP_OK, [], ['groups' => 'districts_get_list']);
     }
 
     /**
@@ -36,7 +36,11 @@ class DistrictController extends AbstractController
         }
 
                 
-        return $this->json($district, Response::HTTP_OK);
+        return $this->json(
+            $district,
+            Response::HTTP_OK,
+            [],
+            ['groups' => 'districts_get_establishments']);
     }
 
 

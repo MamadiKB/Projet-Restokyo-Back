@@ -6,6 +6,7 @@ use App\Repository\DistrictRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DistrictRepository::class)
@@ -16,16 +17,19 @@ class District
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"districts_get_establishments", "districts_get_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"districts_get_establishments", "districts_get_list"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Establishment::class, mappedBy="district")
+     * @Groups({"districts_get_establishments"})
      */
     private $establishments;
 
