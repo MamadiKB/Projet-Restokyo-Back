@@ -73,11 +73,21 @@ class EstablishmentRepository extends ServiceEntityRepository
            ->andWhere('e.district = :district')
            ->setParameter('district', $district)
            ->orderBy('e.id', 'ASC')
-           ->setMaxResults(10)
            ->getQuery()
            ->getResult()
        ;
    }
+
+   /**
+    * Find all ordered by district ASC
+    */
+    public function findAllOrderedByDistrictAsc()
+    {    
+         return $this->createQueryBuilder('e')
+         ->orderBy('e.district', 'ASC')
+         ->getQuery()
+         ->getResult();
+    }
    
 
 
