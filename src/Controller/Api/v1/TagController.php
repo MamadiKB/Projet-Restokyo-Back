@@ -7,6 +7,8 @@ use App\Repository\TagRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class used to deal datas from Tags
@@ -22,7 +24,7 @@ class TagController extends AbstractController
     {
         $tagsList = $tagRepository->findAll();
 
-        return $this->json(['tags' => $tagsList], Response::HTTP_OK);
+        return $this->json(['tags' => $tagsList], Response::HTTP_OK, [], ['groups' => 'tags_get_list']);
     }
 
     /**
@@ -37,7 +39,7 @@ class TagController extends AbstractController
         }
 
                 
-        return $this->json($tag, Response::HTTP_OK);
+        return $this->json($tag, Response::HTTP_OK, [], ['groups' => 'tags_get_establishments']);
     }
 
 

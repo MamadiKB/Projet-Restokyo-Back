@@ -22,25 +22,25 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishment_get_data"})
      */
     private $description;
 
@@ -52,55 +52,55 @@ class Establishment
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $opening_days;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $noon_opening_time;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $evening_opening_time;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishment_get_data"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishment_get_data"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $picture;
 
@@ -111,13 +111,31 @@ class Establishment
 
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
     private $district;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="establishments")
+     * @Groups({"establishments_get_list", "establishment_get_data"})
+     */
+    private $tags;
+
+    /**
+     *
+     * Used to set a validation status on each establishment
+     * If 0 = not validated, if 1 = validated (so shown on page)
+     * 
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+    
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->status = 0;
     }
 
     public function getId(): ?int
@@ -326,6 +344,53 @@ class Establishment
 
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addEstablishment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeEstablishment($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }
