@@ -18,13 +18,13 @@ class District
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"districts_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"districts_get_list", "districts_get_establishments", "establishments_get_list", "establishment_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"districts_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishment_get_data", "districts_get_list", "districts_get_establishments", "establishments_get_list"})
      */
     private $name;
 

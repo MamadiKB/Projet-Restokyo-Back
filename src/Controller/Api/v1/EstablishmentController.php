@@ -87,7 +87,7 @@ class EstablishmentController extends AbstractController
                     'id' => $establishment->getId()
                     ]
                 )
-            ]
+            ], ['groups' => 'establishments_get_list']
         );
     }
 
@@ -100,6 +100,6 @@ class EstablishmentController extends AbstractController
     {
         $type = $establishment->getType();
         $establishmentsList = $establishmentRepository->findByType($type);
-        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
 }
