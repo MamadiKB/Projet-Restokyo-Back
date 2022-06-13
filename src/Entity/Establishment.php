@@ -22,85 +22,85 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $opening_days;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $noon_opening_time;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $evening_opening_time;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"districts_get_establishments", "establishment_get_data"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"districts_get_establishments"})
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $picture;
 
@@ -111,6 +111,7 @@ class Establishment
 
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
+     * @Group({"establishment_get_data"})
      */
     private $district;
 

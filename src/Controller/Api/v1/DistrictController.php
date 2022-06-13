@@ -36,11 +36,7 @@ class DistrictController extends AbstractController
         }
 
                 
-        return $this->json(
-            $district,
-            Response::HTTP_OK,
-            [],
-            ['groups' => 'districts_get_establishments']);
+        return $this->json($district, Response::HTTP_OK, [], ['groups' => 'districts_get_establishments']);
     }
 
 
