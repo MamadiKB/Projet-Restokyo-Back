@@ -1,12 +1,12 @@
 {% extends 'back/menu.html.twig' %}
 
-{% block title %}Liste des films{% endblock %}
+{% block title %}Liste des établissements{% endblock %}
 
 {% block body_back %}
 
-    <h1>Liste des films</h1>
+    <h1>Liste des établissements</h1>
 
-    <a href="{{ path('back_establishment_new') }}" class="btn btn-primary mb-2">Ajouter un film</a>
+    <a href="{{ path('back_establishment_new') }}" class="btn btn-primary mb-2">Ajouter un établissement</a>
 
     {# {{ include('_flash_messages.html.twig') }} #}
 
@@ -16,8 +16,8 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Photo</th>
-                 <th><a href="{# {{ path('back_establishment_listByType') }} #}">Type</a></th>
-                 <th><a href="{# {{ path('back_establishment_listByDistrict') }} #}">Quartier</a></th> 
+                 <th><a href="{{ path('back_establishment_orderByTypeASC') }}">Type</a></th>
+                 <th><a href="{{ path('back_establishment_orderByDistrictASC') }}">Quartier</a></th> 
                 <th>Note</th>
                 <th>actions</th>
             </tr>
@@ -28,7 +28,7 @@
                 <td>{{ establishment.id }}</td>
                 <td>{{ establishment.name }}</td>
                 <td><img src="{{ establishment.picture }}" height="40"></td>
-                <td>{{ establishment.type }}</td>
+                <td><a href="{{ path('back_establishment_listByType',{'type': establishment.type}) }}">{{ establishment.type }}</td>
                 <td>{{ establishment.district }}</td>
                 <td>{{ establishment.rating }}</td>
                 <td>

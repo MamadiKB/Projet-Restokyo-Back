@@ -110,9 +110,11 @@ class AppFixtures extends Fixture
             $establishment->setAddress($faker->address());
             $establishment->setSlug($this->newSlugger->slug($establishment->getName())->lower());
             // 1/2 chance to have a type instead of another
-            $establishment->setType($faker->randomElement(['Restaurant', 'Izakaya']));
+            $establishment->setType($faker->randomElement(['restaurant', 'izakaya']));
             $establishment->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300');
             $establishment->setRating($faker->randomFloat(1, 1, 5));
+            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
+            $establishment->setDistrict($randomDistrict);
 
             $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
             $establishment->setDistrict($randomDistrict);

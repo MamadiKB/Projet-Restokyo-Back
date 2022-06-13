@@ -27,27 +27,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{Type}", name="back_establishment_listByType", methods={"GET"})
-     */
-    public function listByType(EstablishmentRepository $establishmentRepository): Response
-    {
-        return $this->render('back/establishment/index.html.twig', [
-            'establishments' => $establishmentRepository,
-        ]);
-    }
-
-    /**
-     * @Route("/{District}", name="back_establishment_listByDistrict", methods={"GET"})
-     */
-    public function listByDistrict(EstablishmentRepository $establishmentRepository): Response
-    {
-        return $this->render('back/establishment/index.html.twig', [
-            'establishments' => $establishmentRepository,            
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="back_establishment_show", methods={"GET"})
+     * @Route("/{id}", name="back_establishment_show", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function show(Establishment $establishment): Response
     {
@@ -76,9 +56,74 @@ class EstablishmentController extends AbstractController
             'form' => $form,
         ]);
     }
+    
+    /**
+     * @Route("/{id}", name="back_establishment_delete", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function delete(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$establishment->getId(), $request->request->get('_token'))) {
+            $establishmentRepository->remove($establishment);
+            $this->addFlash('success', 'L\'établissement à été supprimé.');
+        }
+
+        return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
+    }
 
     /**
-     * @Route("/edit/{id}", name="back_establishment_edit", methods={"GET", "POST"})
+     * @Route("/orderbytypeasc", name="back_establishment_orderByTypeASC", methods={"GET"})
+     */
+    public function orderByType( EstablishmentRepository $establishmentRepository): Response
+    {
+        $orderByTypeList = $establishmentRepository->findAllOrderedByTypeAsc();
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $orderByTypeList,
+        ]);
+    }
+    /**
+     * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
+     */
+    public function listByType(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    {
+        $type = $establishment->getType();
+        $establishmentByType = $establishmentRepository->findByType($type);
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $establishmentByType,
+        ]);
+    }
+
+    
+
+    /**
+     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"})
+     */
+    public function listByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    {
+        $district = $establishment->getDistrict();
+        $establishmentByDistrict = $establishmentRepository->findByDistrict($district);
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $establishmentByDistrict,
+        ]);
+    }
+
+    /**
+     * @Route("/orderbydistrictasc", name="back_establishment_orderByDistrictASC", methods={"GET"})
+     */
+    public function orderByDistrict( EstablishmentRepository $establishmentRepository): Response
+    {
+        $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc();
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $orderByDistrictList,
+        ]);
+    }
+
+    
+
+
+    
+
+    /**
+     * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {
@@ -97,16 +142,5 @@ class EstablishmentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="back_establishment_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$establishment->getId(), $request->request->get('_token'))) {
-            $establishmentRepository->remove($establishment);
-            $this->addFlash('success', 'L\'établissement à été supprimé.');
-        }
-
-        return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
-    }
+    
 }

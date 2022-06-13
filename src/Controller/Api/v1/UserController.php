@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
+/**    
  * Class used to deal datas from User
  * 
  * @Route("/api/v1", name="api_v1_")
@@ -50,5 +50,4 @@ class UserController extends AbstractController
     {
         #
     }
-
 }
