@@ -44,7 +44,7 @@ class District
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function __toString()
     {
         return $this->name;
     }
@@ -84,5 +84,13 @@ class District
         }
 
         return $this;
+    }
+
+    /**
+     * Get the value of name
+     */ 
+    public function getName()
+    {
+        return $this->name;
     }
 }
