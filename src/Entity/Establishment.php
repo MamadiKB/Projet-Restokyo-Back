@@ -51,6 +51,11 @@ class Establishment
     private $address;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $district;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
@@ -282,6 +287,7 @@ class Establishment
     }
 
     /**
+
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -316,7 +322,13 @@ class Establishment
         return $this->district;
     }
 
+    /**
+     * Set the value of district
+     *
+     * @return  self
+     */ 
     public function setDistrict(?District $district): self
+
     {
         $this->district = $district;
 
