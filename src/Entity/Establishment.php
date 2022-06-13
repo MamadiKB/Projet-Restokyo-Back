@@ -121,10 +121,21 @@ class Establishment
      */
     private $tags;
 
+    /**
+     *
+     * Used to set a validation status on each establishment
+     * If 0 = not validated, if 1 = validated (so shown on page)
+     * 
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+    
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->status = 0;
     }
 
     public function getId(): ?int
@@ -360,6 +371,26 @@ class Establishment
         if ($this->tags->removeElement($tag)) {
             $tag->removeEstablishment($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */ 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */ 
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }
