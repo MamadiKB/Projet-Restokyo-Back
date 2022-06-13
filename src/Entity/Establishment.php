@@ -289,6 +289,7 @@ class Establishment
     }
 
     /**
+
      * @return Collection<int, Comment>
      */
     public function getComments(): Collection
@@ -323,7 +324,13 @@ class Establishment
         return $this->district;
     }
 
+    /**
+     * Set the value of district
+     *
+     * @return  self
+     */ 
     public function setDistrict(?District $district): self
+
     {
         $this->district = $district;
 
