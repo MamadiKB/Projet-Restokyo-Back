@@ -27,20 +27,6 @@ class DistrictController extends AbstractController
             'districts' => $districtRepository->findAll(),
         ]);
     }
-
-    /**
-     * 
-     * Method used to list establishments by districts
-     * 
-     * @Route("/{id}", name="back_district_show", methods={"GET"})
-     */
-    public function show(District $district): Response
-    {
-        return $this->render('back/district/show.html.twig', [
-            'district' => $district,
-        ]);
-    }
-
     /**
      * 
      * Method used to add a new district
@@ -65,6 +51,20 @@ class DistrictController extends AbstractController
             'form' => $form,
         ]);
     }
+    /**
+     * 
+     * Method used to list establishments by districts
+     * 
+     * @Route("/{id}", name="back_district_show", methods={"GET"})
+     */
+    public function show(District $district): Response
+    {
+        return $this->render('back/district/show.html.twig', [
+            'district' => $district,
+        ]);
+    }
+
+    
 
     /**
      * 

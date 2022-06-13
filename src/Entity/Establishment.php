@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\District;
 use App\Repository\EstablishmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,11 +50,6 @@ class Establishment
      * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
      */
     private $address;
-
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $district;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
