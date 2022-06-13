@@ -15,6 +15,24 @@ security:
         #         class: App\Entity\User
         #         property: email
     firewalls:
+        # intercepts API road
+        login:
+            pattern: ^/api/v1/login
+            stateless: true
+            json_login:
+                check_path: /api/v1/login_check # or api_login_check as defined in config/routes.yaml
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        # manage API roads
+        api:
+            pattern:   ^/api/v1
+            stateless: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
+        # dev road
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -31,8 +49,18 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+
+        # Front : If ROLE_USER : add comment on an establishement.
+        # - { path: ^/etablissements/{slug}/commentaires/ajouter, roles: ROLE_USER }
+
+        # Front : If ROLE_USER : can submit a new establishement.
+        # - { path: ^/etablissements/ajouter, roles: ROLE_USER }
+
+        # Back : Secure every road to back with ROLE_ADMIN.
         # - { path: ^/back, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+
+        # API road 
+        # - { path: ^/api/v1, methods: POST, roles: ROLE_ADMIN }
 
 when@test:
     security:
