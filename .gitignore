@@ -22,4 +22,4 @@
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 
-/migration
+/migrations

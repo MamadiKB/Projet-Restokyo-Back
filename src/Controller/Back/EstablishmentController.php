@@ -109,9 +109,10 @@ class EstablishmentController extends AbstractController
     /**
      * @Route("/orderbydistrictasc", name="back_establishment_orderByDistrictASC", methods={"GET"})
      */
-    public function orderByDistrict( EstablishmentRepository $establishmentRepository): Response
+    public function orderByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {
-        $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc();
+        $district = $establishment->getDistrict();
+        $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc($district);
         return $this->render('back/establishment/index.html.twig', [
             'establishments' => $orderByDistrictList,
         ]);

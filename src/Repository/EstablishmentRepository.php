@@ -70,7 +70,7 @@ class EstablishmentRepository extends ServiceEntityRepository
    public function findByDistrict($district): array
    {
        return $this->createQueryBuilder('e')
-           ->andWhere('e.district = :district')
+           ->andWhere('e.district_id = :district')
            ->setParameter('district', $district)
            ->orderBy('e.id', 'ASC')
            ->getQuery()
@@ -84,9 +84,21 @@ class EstablishmentRepository extends ServiceEntityRepository
     public function findAllOrderedByDistrictAsc()
     {    
          return $this->createQueryBuilder('e')
-         ->orderBy('e.district', 'ASC')
+         ->orderBy('e.district_id', 'ASC')
          ->getQuery()
          ->getResult();
+    }
+
+    /**
+     * Find best rating limit 3
+     */
+    public function findBestRatingDsc()
+    {
+        return $this->createQueryBuilder('e')
+        ->orderBy('e.rating', 'DSC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
     }
    
 
