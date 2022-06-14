@@ -54,6 +54,21 @@ class EstablishmentRepository extends ServiceEntityRepository
            ->getResult()
        ;
    }
+
+   /**
+    * @return Establishment[] Returns an array of Establishment objects
+    */
+    public function findByStatus($status): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.status = :status')
+            ->setParameter('status', $status)
+            ->orderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     /**
     * Find all ordered by type ASC
     */
