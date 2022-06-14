@@ -130,6 +130,12 @@ class Establishment
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=OpeningTime::class, inversedBy="establishments")
+     * @Groups({"establishments_get_list", "establishment_get_data"})
+     */
+    private $openingTime;
     
 
     public function __construct()
@@ -392,6 +398,18 @@ class Establishment
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOpeningTime(): ?OpeningTime
+    {
+        return $this->openingTime;
+    }
+
+    public function setOpeningTime(?OpeningTime $openingTime): self
+    {
+        $this->openingTime = $openingTime;
 
         return $this;
     }

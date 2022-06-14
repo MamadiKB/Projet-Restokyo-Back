@@ -31,7 +31,7 @@ class EstablishmentController extends AbstractController
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
-        $establishmentsList = $establishmentRepository->findAll();
+        $establishmentsList = $establishmentRepository->findByStatus(1);
 
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
