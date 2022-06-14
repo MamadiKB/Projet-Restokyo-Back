@@ -69,6 +69,8 @@ class EstablishmentController extends AbstractController
 
         return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    
 
     /**
      * @Route("/orderbytypeasc", name="back_establishment_orderByTypeASC", methods={"GET"})
@@ -80,6 +82,19 @@ class EstablishmentController extends AbstractController
             'establishments' => $orderByTypeList,
         ]);
     }
+
+    /**
+     * @Route("/orderbydistrictasc", name="back_establishment_orderByDistrictASC", methods={"GET"})
+     */
+    public function orderByDistrict(EstablishmentRepository $establishmentRepository): Response
+    {
+        $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc();
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $orderByDistrictList,
+        ]);
+    }
+   
+
     /**
      * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
      */
@@ -91,37 +106,6 @@ class EstablishmentController extends AbstractController
             'establishments' => $establishmentByType,
         ]);
     }
-
-    
-
-    /**
-     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"})
-     */
-    public function listByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
-    {
-        $district = $establishment->getDistrict();
-        $establishmentByDistrict = $establishmentRepository->findByDistrict($district);
-        return $this->render('back/establishment/index.html.twig', [
-            'establishments' => $establishmentByDistrict,
-        ]);
-    }
-
-    /**
-     * @Route("/orderbydistrictasc", name="back_establishment_orderByDistrictASC", methods={"GET"})
-     */
-    public function orderByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
-    {
-        $district = $establishment->getDistrict();
-        $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc($district);
-        return $this->render('back/establishment/index.html.twig', [
-            'establishments' => $orderByDistrictList,
-        ]);
-    }
-
-    
-
-
-    
 
     /**
      * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
@@ -140,6 +124,19 @@ class EstablishmentController extends AbstractController
         return $this->renderForm('back/establishment/new.html.twig', [
             'establisment' => $establishment,
             'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"}, requirements={"district"=".*"}) 
+     */
+    public function listByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    {
+        $district = $establishment->getDistrict();
+        $establishmentByDistrict = $establishmentRepository->findByDistrict($district);
+        return $this->render('back/establishment/index.html.twig', [
+            'establishments' => $establishmentByDistrict,
+            'Location' => 'App\Entity\Establishment',
         ]);
     }
 

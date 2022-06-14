@@ -70,7 +70,7 @@ class EstablishmentRepository extends ServiceEntityRepository
    public function findByDistrict($district): array
    {
        return $this->createQueryBuilder('e')
-           ->andWhere('e.district_id = :district')
+           ->andWhere('e.district = :district')
            ->setParameter('district', $district)
            ->orderBy('e.id', 'ASC')
            ->getQuery()
@@ -84,7 +84,7 @@ class EstablishmentRepository extends ServiceEntityRepository
     public function findAllOrderedByDistrictAsc()
     {    
          return $this->createQueryBuilder('e')
-         ->orderBy('e.district_id', 'ASC')
+         ->orderBy('e.district', 'ASC')
          ->getQuery()
          ->getResult();
     }
