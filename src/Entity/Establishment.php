@@ -50,10 +50,6 @@ class Establishment
      */
     private $address;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $district;
 
     /**
      * @ORM\Column(type="integer", nullable=true)

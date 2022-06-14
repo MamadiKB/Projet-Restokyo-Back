@@ -39,19 +39,19 @@ security:
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: app_user_provider # users_in_memory
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
-            # form_login:
+            form_login:
                 # "login" is the name of the route created previously
-                # login_path: login
-                # check_path: login
+                login_path: login
+                check_path: login
 
-            # logout:
+            logout:
                 # Correspond au nom de la route, name="logout"
-                # path: logout
+                path: logout
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
@@ -70,7 +70,11 @@ security:
         - { path: ^/back, roles: ROLE_ADMIN }
 
         # API road 
-        - { path: ^/api/v1, methods: POST, roles: ROLE_ADMIN }
+        - { path: ^/api/v1, roles: ROLE_ADMIN, methods: POST}
+
+    role_hierarchy:
+        # ADMIN > USER
+        ROLE_ADMIN: ROLE_USER
 
 when@test:
     security:
