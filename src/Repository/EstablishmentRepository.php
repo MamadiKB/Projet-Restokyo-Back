@@ -68,6 +68,7 @@ class EstablishmentRepository extends ServiceEntityRepository
            ->getResult()
        ;
    }
+
     /**
     * Find all ordered by type ASC
     */
@@ -78,6 +79,24 @@ class EstablishmentRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
    }
+
+   /**
+     * Find all ordered by rating DESC Limit 3 (DQL)
+     */
+    public function findAllOrderedByBestRating()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Establishment e
+            WHERE e.status = 1
+            ORDER BY e.rating DESC'
+        )->setMaxResults(3);
+
+        return $query->getResult();
+    }
+
     /**
     * @return Establishment[] Returns an array of Establishment objects
     */
@@ -101,6 +120,24 @@ class EstablishmentRepository extends ServiceEntityRepository
          ->orderBy('e.district', 'ASC')
          ->getQuery()
          ->getResult();
+    }
+
+    /**
+     * Find establishments sorted by district
+     */
+    public function findEstablishmentByDistrict($id)
+    {
+
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT * 
+            FROM establishment AS est
+            INNER JOIN district AS dis ON dis.id = est.district_id
+            WHERE est.status = 1 AND dis.id = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
     }
    
 

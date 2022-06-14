@@ -26,8 +26,6 @@ class EstablishmentController extends AbstractController
 
     /**
      * @Route("/establishments", name="establishments_get_list", methods={"GET"})
-     * 
-     * 
      */
     public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
     {
@@ -47,6 +45,16 @@ class EstablishmentController extends AbstractController
         }
 
         return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_data']);
+    }
+
+    /**
+     * @Route("/establishments/best", name="establishments_get_best", methods={"GET"})
+     */
+    public function establishmentsGetBest(EstablishmentRepository $establishmentRepository)
+    {
+        $establishmentsTop = $establishmentRepository->findAllOrderedByBestRating();
+
+        return $this->json(['establishmentsTop' => $establishmentsTop], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
 
     /**

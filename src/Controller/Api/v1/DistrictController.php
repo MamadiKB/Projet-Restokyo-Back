@@ -3,12 +3,15 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\District;
+use App\Entity\Establishment;
 use App\Repository\DistrictRepository;
+use App\Repository\EstablishmentRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class used to deal datas from District
@@ -30,15 +33,17 @@ class DistrictController extends AbstractController
     /**
      * @Route("/districts/{id}", name="districts_get_establishments", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function establishmentsByDistrict(District $district = null)
+    public function establishmentsByDistrict(District $district, EstablishmentRepository $establishmentRepository)
     {
         // 404 ?
         if ($district === null) {
-            return $this->json(['error' => 'Quartier non trouvé.'], Response::HTTP_NOT_FOUND);
+            throw $this->createNotFoundException('Pas de quartier !');
         }
 
-                
-        return $this->json($district, Response::HTTP_OK, [], ['groups' => 'districts_get_establishments']);
+        $id = $district->getId();
+        $establishmentsList = $establishmentRepository->findEstablishmentByDistrict($id);
+
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'districts_get_list']);
     }
 
 

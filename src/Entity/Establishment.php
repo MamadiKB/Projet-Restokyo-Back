@@ -127,6 +127,8 @@ class Establishment
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
      * 
+     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * 
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
