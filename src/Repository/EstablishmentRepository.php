@@ -64,6 +64,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
    }
+   
     /**
     * @return Establishment[] Returns an array of Establishment objects
     */

@@ -29,7 +29,11 @@
                 <td>{{ establishment.name }}</td>
                 <td><img src="{{ establishment.picture }}" height="40"></td>
                 <td><a href="{{ path('back_establishment_listByType',{'type': establishment.type}) }}">{{ establishment.type }}</td>
-                <td><a href="{{ path('back_establishment_listByDistrict',{'district': establishment.district}) }}">{{ establishment.district }}</td>
+                <pre>
+                    {# {{ dump(establishment.district) }} #}
+                </pre>
+                 <td><a href="{{ path('back_establishment_listByDistrict',{'district': establishment.district.id}) }}">{{ establishment.district.name }}</td> 
+                
                 <td>{{ establishment.rating }}</td>
                 <td>
                     <a href="{{ path('back_establishment_show', {'id': establishment.id}) }}" class="btn btn-sm btn-primary">show</a>

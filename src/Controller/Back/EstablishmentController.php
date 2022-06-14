@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\District;
 use App\Entity\Establishment;
 use App\Form\EstablishmentType;
+use App\Repository\DistrictRepository;
 use App\Repository\EstablishmentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,17 +129,15 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{district}", name="back_establishment_listByDistrict", methods={"GET"}, requirements={"district"=".*"}) 
+     * @Route("/district/{district}", name="back_establishment_listByDistrict", methods={"GET"}) 
      */
-    public function listByDistrict(Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
+    public function listByDistrict(EstablishmentRepository $establishmentRepository, District $district): Response
     {
-        $district = $establishment->getDistrict();
-        $establishmentByDistrict = $establishmentRepository->findByDistrict($district);
+        $districtId = $district->getId();
+        $establishmentByDistrict = $establishmentRepository->findByDistrict($districtId);
         return $this->render('back/establishment/index.html.twig', [
             'establishments' => $establishmentByDistrict,
             'Location' => 'App\Entity\Establishment',
         ]);
     }
-
-    
 }
