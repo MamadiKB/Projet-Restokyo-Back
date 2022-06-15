@@ -50,7 +50,6 @@ class Establishment
      */
     private $address;
 
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
