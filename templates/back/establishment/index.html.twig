@@ -18,6 +18,8 @@
                 <th>Photo</th>
                  <th><a href="{{ path('back_establishment_orderByTypeASC') }}">Type</a></th>
                  <th><a href="{{ path('back_establishment_orderByDistrictASC') }}">Quartier</a></th> 
+                <th>Site web</th>
+                <th>Téléphone</th>
                 <th>Note</th>
                 <th>actions</th>
             </tr>
@@ -29,11 +31,9 @@
                 <td>{{ establishment.name }}</td>
                 <td><img src="{{ establishment.picture }}" height="40"></td>
                 <td><a href="{{ path('back_establishment_listByType',{'type': establishment.type}) }}">{{ establishment.type }}</td>
-                <pre>
-                    {# {{ dump(establishment.district) }} #}
-                </pre>
-                 <td><a href="{{ path('back_establishment_listByDistrict',{'district': establishment.district.id}) }}">{{ establishment.district.name }}</td> 
-                
+                <td><a href="{{ path('back_establishment_listByDistrict',{'district': establishment.district.id}) }}">{{ establishment.district.name }}</td> 
+                <td>{{ establishment.website }}</td>
+                <td>{{ establishment.phone }}</td>
                 <td>{{ establishment.rating }}</td>
                 <td>
                     <a href="{{ path('back_establishment_show', {'id': establishment.id}) }}" class="btn btn-sm btn-primary">show</a>

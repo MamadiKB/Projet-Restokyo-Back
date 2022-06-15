@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Establishment;
 use DateTime;
+use App\Entity\District;
+use App\Entity\Establishment;
+
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
+
 
 class EstablishmentType extends AbstractType
 {
@@ -32,6 +37,17 @@ class EstablishmentType extends AbstractType
             ])
             ->add('description', TextareaType::class)
             ->add('address')
+            ->add('district', EntityType::class, [
+                'class' => District::class,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('d')
+                        ->orderBy('d.name', 'ASC');
+                },
+            ])
+
             // ->add('opening_days',ChoiceType::class, [
                 
             //     'choices' => [
@@ -46,6 +62,7 @@ class EstablishmentType extends AbstractType
 
             //     'expanded' => true,
             //     'multiple' => true,
+
             // ])
             // ->add('noon_opening_time', TimezoneType::class, [
             //     'placeholder' => [
@@ -57,8 +74,12 @@ class EstablishmentType extends AbstractType
             //     'boolean' => false,
             // ])
             // ->add('evening_opening_time')
-            // ->add('website', UrlType::class)
-            // ->add('phone', IntegerType::class)
+            ->add('website', UrlType::class, [
+                'required' => false,
+            ])
+            ->add('phone', IntegerType::class, [
+                'required' => false,
+            ])
             ->add('picture', UrlType::class);
     }
 
