@@ -75,7 +75,7 @@ security:
         - { path: ^/etablissements/ajouter, roles: ROLE_USER }
 
         # Back : Secure every road to back with ROLE_ADMIN.
-        - { path: ^/back, roles: ROLE_ADMIN }
+        # - { path: ^/back, roles: ROLE_ADMIN }
 
         # API road 
         - { path: ^/api/v1/new, roles: ROLE_ADMIN, methods: POST}
