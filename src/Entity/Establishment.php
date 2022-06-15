@@ -47,33 +47,40 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishment_get_data"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
     private $price;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * 
      */
-    private $opening_days;
+    private $businessTime;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
-     */
-    private $noon_opening_time;
+    // /**
+    //  * @ORM\Column(type="text", nullable=true)
+    //  * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+    //  */
+    // private $opening_days;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
-     */
-    private $evening_opening_time;
+    // /**
+    //  * @ORM\Column(type="text", nullable=true)
+    //  * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+    //  */
+    // private $noon_opening_time;
+
+    // /**
+    //  * @ORM\Column(type="text", nullable=true)
+    //  * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+    //  */
+    // private $evening_opening_time;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -89,19 +96,19 @@ class Establishment
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
     private $picture;
 
@@ -128,16 +135,17 @@ class Establishment
      *
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      * 
      * @ORM\Column(name="status", type="integer")
      */
     private $status;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=OpeningTime::class, inversedBy="establishments")
-     * @Groups({"establishments_get_list", "establishment_get_data"})
-     */
-    private $openingTime;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=OpeningTime::class, inversedBy="establishments")
+    //  * @Groups({"establishments_get_list", "establishment_get_data"})
+    //  */
+    //private $openingTime;
     
 
     public function __construct()
@@ -229,29 +237,29 @@ class Establishment
         return $this;
     }
 
-    public function getNoonOpeningTime(): ?string
-    {
-        return $this->noon_opening_time;
-    }
+    // public function getNoonOpeningTime(): ?string
+    // {
+    //     return $this->noon_opening_time;
+    // }
 
-    public function setNoonOpeningTime(?string $noon_opening_time): self
-    {
-        $this->noon_opening_time = $noon_opening_time;
+    // public function setNoonOpeningTime(?string $noon_opening_time): self
+    // {
+    //     $this->noon_opening_time = $noon_opening_time;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getEveningOpeningTime(): ?string
-    {
-        return $this->evening_opening_time;
-    }
+    // public function getEveningOpeningTime(): ?string
+    // {
+    //     return $this->evening_opening_time;
+    // }
 
-    public function setEveningOpeningTime(?string $evening_opening_time): self
-    {
-        $this->evening_opening_time = $evening_opening_time;
+    // public function setEveningOpeningTime(?string $evening_opening_time): self
+    // {
+    //     $this->evening_opening_time = $evening_opening_time;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getWebsite(): ?string
     {
@@ -409,14 +417,26 @@ class Establishment
         return $this;
     }
 
-    public function getOpeningTime(): ?OpeningTime
+    //public function getOpeningTime(): ?OpeningTime
+    // {
+    //     return $this->openingTime;
+    // }
+
+    // public function setOpeningTime(?OpeningTime $openingTime): self
+    // {
+    //     $this->openingTime = $openingTime;
+
+    //     return $this;
+    // }
+
+    public function getBusinessTime(): ?string
     {
-        return $this->openingTime;
+        return $this->businessTime;
     }
 
-    public function setOpeningTime(?OpeningTime $openingTime): self
+    public function setBusinessTime(?string $businessTime): self
     {
-        $this->openingTime = $openingTime;
+        $this->businessTime = $businessTime;
 
         return $this;
     }

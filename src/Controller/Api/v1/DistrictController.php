@@ -30,16 +30,16 @@ class DistrictController extends AbstractController
     /**
      * @Route("/districts/{id}", name="districts_get_establishments", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function establishmentsByDistrict(District $district = null)
-    {
-        // 404 ?
-        if ($district === null) {
-            return $this->json(['error' => 'Quartier non trouvé.'], Response::HTTP_NOT_FOUND);
-        }
+    // public function establishmentsByDistrict(District $district = null)
+    // {
+    //     // 404 ?
+    //     if ($district === null) {
+    //         return $this->json(['error' => 'Quartier non trouvé.'], Response::HTTP_NOT_FOUND);
+    //     }
 
                 
-        return $this->json($district, Response::HTTP_OK, [], ['groups' => 'districts_get_establishments']);
-    }
+    //     return $this->json($district, Response::HTTP_OK, [], ['groups' => 'districts_get_establishments']);
+    // }
 
 
 }

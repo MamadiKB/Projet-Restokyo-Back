@@ -2,17 +2,19 @@
 
 namespace App\Controller\Api\v1;
 
+use App\Entity\District;
 use App\Entity\Establishment;
+use App\Entity\Tag;
 use App\Repository\EstablishmentRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
 
 
 
@@ -103,26 +105,27 @@ class EstablishmentController extends AbstractController
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
     }
 
-    /**
-     * @Route("/establishments/{id}", name="establishment_delete_data", methods={"DELETE"}, requirements={"id"="\d+"})
-     */
-    public function establishmentsDeleteType(Establishment $establishment)
-    {
-        if ($establishment === null) {
-            return $this->json(['error' => 'Etablissement inexistant (pour le moment !)'], Response::HTTP_NOT_FOUND);
-        }
 
-        if ($establishment) {
-            // debated point: should we 404 on an unknown nickname?
-            // or should we just return a nice 204 in all cases?           
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($establishment);
-            $em->flush();
-        }
+    //! OLD
 
-        return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_list']);
+    // /**
+    //  * @Route("/establishments/{id}", name="establishment_delete_data", methods={"DELETE"}, requirements={"id"="\d+"})
+    //  */
+    // public function establishmentsDeleteType(Establishment $establishment)
+    // {
+    //     if ($establishment === null) {
+    //         return $this->json(['error' => 'Etablissement inexistant (pour le moment !)'], Response::HTTP_NOT_FOUND);
+    //     }
 
+    //     if ($establishment) {
+    //         // debated point: should we 404 on an unknown nickname?
+    //         // or should we just return a nice 204 in all cases?           
+    //         $em = $this->getDoctrine()->getManager();
+    //         $em->remove($establishment);
+    //         $em->flush();
+    //     }
 
-    }
+    //     return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_list']);
+    // }
 
 }

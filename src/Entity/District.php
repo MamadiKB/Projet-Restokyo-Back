@@ -19,19 +19,19 @@ class District
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"districts_get_list", "districts_get_establishments", "establishments_get_list", "establishment_get_data"})
+     * @Groups({"districts_get_list", "establishments_get_list", "establishment_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishment_get_data", "districts_get_list", "districts_get_establishments", "establishments_get_list"})
+     * @Groups({"establishment_get_data", "districts_get_list", "establishments_get_list"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Establishment::class, mappedBy="district")
-     * @Groups({"districts_get_establishments"})
+     * 
      */
     private $establishments;
 
