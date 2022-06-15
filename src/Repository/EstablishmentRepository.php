@@ -23,7 +23,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Establishment::class);
     }
 
-    public function add(Establishment $entity, bool $flush = false): void
+    public function add(Establishment $entity, bool $flush = true): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -32,7 +32,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Establishment $entity, bool $flush = false): void
+    public function remove(Establishment $entity, bool $flush = true): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -79,6 +79,7 @@ class EstablishmentRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
    }
+   
     /**
     * @return Establishment[] Returns an array of Establishment objects
     */
@@ -102,6 +103,18 @@ class EstablishmentRepository extends ServiceEntityRepository
          ->orderBy('e.district', 'ASC')
          ->getQuery()
          ->getResult();
+    }
+
+    /**
+     * Find best rating limit 3
+     */
+    public function findBestRatingDsc()
+    {
+        return $this->createQueryBuilder('e')
+        ->orderBy('e.rating', 'DSC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
     }
    
 
