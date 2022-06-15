@@ -3,17 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"})
+ * @UniqueEntity(fields={"email", "username"})
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -23,7 +23,7 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
@@ -33,7 +33,8 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * 
      */
     private $username;
 
@@ -63,19 +64,9 @@ class User
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="json")
      */
-    private $role;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $comments;
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
+    private $roles = [];
 
     public function getId(): ?int
     {
@@ -94,6 +85,9 @@ class User
         return $this;
     }
 
+     /**
+     * @see PasswordAuthenticatedUserInterface
+     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -106,9 +100,12 @@ class User
         return $this;
     }
 
-    public function getUsername(): ?string
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        return $this->username;
+        return (string) $this->username;
     }
 
     public function setUsername(string $username): self
@@ -178,45 +175,52 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
-
-        return $this;
+        return (string) $this->email;
     }
 
     /**
-     * @return Collection<int, Comment>
+     * @see UserInterface
      */
-    public function getComments(): Collection
+    public function getRoles(): array
     {
-        return $this->comments;
+        $roles = $this->roles;
+        
+        return array_unique($roles);
     }
 
-    public function addComment(Comment $comment): self
+    public function setRoles(array $roles): self
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setUser($this);
-        }
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
-        }
+    
 
-        return $this;
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
