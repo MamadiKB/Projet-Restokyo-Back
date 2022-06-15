@@ -112,6 +112,7 @@ class Establishment
 
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
+     * @ORM\JoinColumn(nullable=false)
      * @Groups({"establishments_get_list", "establishment_get_data"})
      */
     private $district;
