@@ -122,6 +122,7 @@ class AppFixtures extends Fixture
 
             $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
             $establishment->setDistrict($randomDistrict);
+            $establishment->setStatus(mt_rand(0,1));
 
 
             //!\ TAGS to ESTABLISHMENTS
