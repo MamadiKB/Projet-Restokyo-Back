@@ -115,7 +115,7 @@ class UserController extends AbstractController
                 'Location' => $this->generateUrl('api_v1_back_user_show', ['id' => $user->getId()])
             ],
             // Pour éviter les références circulaires
-            ['groups' => 'user_get_item']
+            //['groups' => 'user_get_item']
         );
     }
 }

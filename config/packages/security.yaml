@@ -41,6 +41,12 @@ security:
             lazy: true
             provider: app_user_provider # users_in_memory
 
+            json_login:
+                # api_login is a route we will create below
+                check_path: api_login
+                username_path: email
+                password_path: password
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -52,6 +58,8 @@ security:
             logout:
                 # Correspond au nom de la route, name="logout"
                 path: logout
+                # where to redirect after logout
+                target: login
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
@@ -70,7 +78,7 @@ security:
         - { path: ^/back, roles: ROLE_ADMIN }
 
         # API road 
-        - { path: ^/api/v1, roles: ROLE_ADMIN, methods: POST}
+        - { path: ^/api/v1/new, roles: ROLE_ADMIN, methods: POST}
 
     role_hierarchy:
         # ADMIN > USER
