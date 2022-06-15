@@ -107,7 +107,7 @@ class AppFixtures extends Fixture
 
         //!\ ESTABLISHMENTS
 
-        for ($e = 1; $e <= 10; $e++) {
+        for ($e = 1; $e <= 40; $e++) {
             $establishment = new Establishment();
             $establishment->setName($faker->unique()->establishmentName());
             $establishment->setDescription($faker->text(100));

@@ -28,7 +28,24 @@ class RestokyoProvider
         'Sakura-tei',
         'The Great Burger',
         'Nikuya-no Daidokoro',
-        'bar à vin CROISÉE'
+        'bar à vin CROISÉE',
+        'Chez Adrien',
+        'Chez JC',
+        'Chez Bapt le Goat',
+        'Chez Nic\'O\'Rage',
+        'Chez Ken',
+        'Chez Mamadi d\amour',
+        'Chez Olivier',
+        'Chez le Meme Controller',
+        'Chez Lud\'O',
+        'Le restau du Kev',
+        'Chez Guevara',
+        'Avec ou sans les mains',
+        'Omae Wa Mou Shindeiru',
+        'Naniiiii ??',
+        'Yamete Kudasai',
+        'Sans aucun sushi, philosophie',
+        'Hakuna Matata, Hakunon Montonton'
     ];
 
     // 80 tags

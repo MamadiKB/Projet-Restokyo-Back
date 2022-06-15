@@ -14,10 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class District
 {
-    public function __toString()
-    {
-        return $this->name;
-    }
     
     /**
      * @ORM\Id
