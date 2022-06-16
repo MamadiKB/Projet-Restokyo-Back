@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -62,6 +63,11 @@ class Comment
      * @Groups({"establishment_get_data"})
      */
     private $user;
+
+    public function __construct()
+    {
+        $this->setPublishedAt(new DateTimeImmutable());
+    }
 
     public function getId(): ?int
     {

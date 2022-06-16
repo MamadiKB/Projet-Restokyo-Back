@@ -34,6 +34,10 @@ class EstablishmentController extends AbstractController
     public function establishmentsGetValidatedList(EstablishmentRepository $establishmentRepository)
     {
         $establishmentsList = $establishmentRepository->findByStatus(1);
+        
+        // foreach ($establishmentsList as $currentEstablishment) {
+        //     $currentEstablishment->setRating($establishmentRepository->averageRating($currentEstablishment->getId()));
+        // }
 
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_validated']);
     }
