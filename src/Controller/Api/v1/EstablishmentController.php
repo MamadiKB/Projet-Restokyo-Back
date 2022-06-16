@@ -31,11 +31,11 @@ class EstablishmentController extends AbstractController
      * 
      * 
      */
-    public function establishmentsGetList(EstablishmentRepository $establishmentRepository)
+    public function establishmentsGetValidatedList(EstablishmentRepository $establishmentRepository)
     {
         $establishmentsList = $establishmentRepository->findByStatus(1);
 
-        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);
+        return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_validated']);
     }
 
     /**

@@ -17,13 +17,13 @@ class Tag
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"tags_get_list", "establishments_get_list", "establishment_get_data"})
+     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"tags_get_list", "establishments_get_list", "establishment_get_data"})
+     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $name;
 
