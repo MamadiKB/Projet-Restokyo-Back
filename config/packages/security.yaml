@@ -28,15 +28,16 @@ security:
         api:
             pattern:   ^/api/v1
             stateless: true
-            jwt: ~
-            #guard:
-                # authenticators:
-                    # - lexik_jwt_authentication.jwt_token_authenticator
+            #jwt: ~
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
 
         # dev road
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
             provider: app_user_provider # users_in_memory
@@ -46,6 +47,7 @@ security:
                 check_path: api_login
                 username_path: email
                 password_path: password
+                
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -78,7 +80,7 @@ security:
         - { path: ^/back, roles: ROLE_ADMIN }
 
         # API road 
-        - { path: ^/api/v1/new, roles: ROLE_ADMIN, methods: POST}
+        - { path: ^/api/v1/establishments, methods: POST, roles: ROLE_ADMIN }
 
     role_hierarchy:
         # ADMIN > USER

@@ -50,7 +50,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
+     * @Route("/establishments", name="establishment_set_data", methods={"POST"})
      */
     public function establishmentsPostItem(Request $request,
     SerializerInterface $serializer,

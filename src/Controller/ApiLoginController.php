@@ -2,20 +2,61 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiLoginController extends AbstractController
 {
+    
+    
     /**
-     * @Route("/api/login", name="app_api_login")
+     * @Route("/api/login", name: "login_check")
      */
-    public function index(): JsonResponse
+    /*public function index(CurrentUser $currentUser, ?User $user): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ApiLoginController.php',
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $token = $currentUser; // somehow create an API token for $user
+
+        return $this->json([             
+            'user'  => $user->getUserIdentifier(),
+            'token' => $token,
         ]);
     }
+    */
+    
+/*
+use App\Entity\User;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+
+  class ApiLoginController extends AbstractController
+  {
+    #[Route('/api/login', name: 'api_login')]
+    
+    public function index(#[CurrentUser] ?User $user): Response
+    {
+        if (null === $user) {
+            return $this->json([
+                'message' => 'missing credentials',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $token = ...; // somehow create an API token for $user
+
+        return $this->json([             
+            'user'  => $user->getUserIdentifier(),
+            'token' => $token,
+        ]);
+    }
+}
+*/
+
 }
