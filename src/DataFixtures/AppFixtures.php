@@ -13,6 +13,8 @@ use App\Entity\Establishment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\RestokyoProvider;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
@@ -42,26 +44,28 @@ class AppFixtures extends Fixture
 
         //!\ USERS
 
-        // // Mise en place des user par ordre de privilège
-        // // Admin
-
-        // $admin = new User();
-        // $admin->setEmail('admin@admin.com');
-        // $admin->setPassword('admin');
-        // $admin->setUsername('admin');
-        // $admin->setFirstname('administrateur');
-        // $admin->setRole('ADMIN');
+        // Users
+        $admin = new User();
+        $admin->setEmail('kurosaki@admin.com');
+        $admin->setPassword('$2y$13$k.VR08yUFrLSDQ1FI5jCcet6alcnXTA74cmKaQt6im.bnkOZr4j2K');
+        $admin->setUsername('15');
+        $admin->setLastname('Kurosaki');
+        $admin->setFirstname('Ichigo');
+        $admin->setRoles(["ROLE_ADMIN"]);
+        $manager->persist($admin);
 
         // $manager->persist($admin);
 
         // // User
 
-        // $user = new User();
-        // $user->setEmail('user@user.com');
-        // $user->setPassword('user');
-        // $user->setUsername('user');
-        // $user->setFirstname('utilisateur');
-        // $user->setRole('USER');
+        $user = new User();
+        $user->setEmail('uzumaki@user.com');
+        $user->setPassword('$2y$13$6i3S3bre3oIbVcQbXElJD.59eXfLCl7PKJ/QqFOm6IM/C5JqeRMi6');
+        $user->setUsername('Hokage');
+        $user->setLastname('Uzumaki');
+        $user->setFirstname('Naruto');
+        $user->setRoles(["ROLE_USER"]);
+        $manager->persist($user);
 
         // $manager->persist($user);
 
@@ -103,7 +107,7 @@ class AppFixtures extends Fixture
 
         //!\ ESTABLISHMENTS
 
-        for ($e = 1; $e <= 10; $e++) {
+        for ($e = 1; $e <= 40; $e++) {
             $establishment = new Establishment();
             $establishment->setName($faker->unique()->establishmentName());
             $establishment->setDescription($faker->text(100));
@@ -118,6 +122,7 @@ class AppFixtures extends Fixture
 
             $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
             $establishment->setDistrict($randomDistrict);
+            $establishment->setStatus(mt_rand(0,1));
 
 
             //!\ TAGS to ESTABLISHMENTS

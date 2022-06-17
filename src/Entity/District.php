@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=DistrictRepository::class)
  */
 class District
-{   
+{
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

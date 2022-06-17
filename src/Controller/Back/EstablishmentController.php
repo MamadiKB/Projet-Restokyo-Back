@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/back/etablissement")
+ * @Route("/etablissement")
  */
 class EstablishmentController extends AbstractController
 {
@@ -22,7 +22,7 @@ class EstablishmentController extends AbstractController
      */
     public function index(EstablishmentRepository $establishmentRepository): Response
     {
-        return $this->render('back/establishment/index.html.twig', [
+        return $this->render('establishment/index.html.twig', [
             'establishments' => $establishmentRepository->findAll(),
         ]);
     }
@@ -32,7 +32,7 @@ class EstablishmentController extends AbstractController
      */
     public function show(Establishment $establishment): Response
     {
-        return $this->render('back/establishment/show.html.twig', [
+        return $this->render('establishment/show.html.twig', [
             'establishment' => $establishment,
         ]);
     }
@@ -52,7 +52,7 @@ class EstablishmentController extends AbstractController
             return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/establishment/new.html.twig', [
+        return $this->renderForm('establishment/new.html.twig', [
             'establisment' => $establishment,
             'form' => $form,
         ]);
@@ -79,7 +79,7 @@ class EstablishmentController extends AbstractController
     public function orderByType( EstablishmentRepository $establishmentRepository): Response
     {
         $orderByTypeList = $establishmentRepository->findAllOrderedByTypeAsc();
-        return $this->render('back/establishment/index.html.twig', [
+        return $this->render('establishment/index.html.twig', [
             'establishments' => $orderByTypeList,
         ]);
     }
@@ -90,7 +90,7 @@ class EstablishmentController extends AbstractController
     public function orderByDistrict(EstablishmentRepository $establishmentRepository): Response
     {
         $orderByDistrictList = $establishmentRepository->findAllOrderedByDistrictAsc();
-        return $this->render('back/establishment/index.html.twig', [
+        return $this->render('establishment/index.html.twig', [
             'establishments' => $orderByDistrictList,
         ]);
     }
@@ -103,7 +103,7 @@ class EstablishmentController extends AbstractController
     {
         $type = $establishment->getType();
         $establishmentByType = $establishmentRepository->findByType($type);
-        return $this->render('back/establishment/index.html.twig', [
+        return $this->render('establishment/index.html.twig', [
             'establishments' => $establishmentByType,
         ]);
     }
@@ -122,7 +122,7 @@ class EstablishmentController extends AbstractController
             return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/establishment/new.html.twig', [
+        return $this->renderForm('establishment/new.html.twig', [
             'establisment' => $establishment,
             'form' => $form,
         ]);
@@ -135,7 +135,7 @@ class EstablishmentController extends AbstractController
     {
         $districtId = $district->getId();
         $establishmentByDistrict = $establishmentRepository->findByDistrict($districtId);
-        return $this->render('back/establishment/index.html.twig', [
+        return $this->render('establishment/index.html.twig', [
             'establishments' => $establishmentByDistrict,
             'Location' => 'App\Entity\Establishment',
         ]);

@@ -1,4 +1,4 @@
-{% extends 'back/menu.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste des districts{% endblock %}
 
@@ -6,7 +6,7 @@
 
     <h1>Liste des districts</h1>
 
-    <a href="{{ path('back_district_new') }}" class="btn btn-primary mb-2">Ajouter un district</a>
+    <a href="{{ path('back_district_new') }}" class="btn btn-warning mb-2">Ajouter un district</a>
 
     {# {{ include('_flash_messages.html.twig') }} #}
 
@@ -22,7 +22,7 @@
         {% for district in districts %}
             <tr>
                 <td>{{ district.id }}</td>
-                <td>{{ district.name }}</td>
+                <td><a href="{{ path('back_district_show', {'id': district.id}) }}">{{ district.name }}</a></td>
                 <td>
                     <a href="{{ path('back_district_show', {'id': district.id}) }}" class="btn btn-sm btn-primary">show</a>
                     <a href="{{ path('back_district_edit', {'id': district.id}) }}" class="btn btn-sm btn-success">edit</a>

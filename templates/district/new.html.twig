@@ -1,11 +1,11 @@
-{% extends 'back/menu.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}New District{% endblock %}
 
 {% block body_back %}
     <h1>Create new District</h1>
 
-    {{ include('back/district/_form.html.twig') }}
+    {{ include('district/_form.html.twig') }}
 
     <a href="{{ path('back_district_index') }}">back to list</a>
 {% endblock %}

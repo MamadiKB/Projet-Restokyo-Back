@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class BackController extends AbstractController
 {
     /**
-     * @Route("/back", name="back_back_menu")
+     * @Route("/", name="back_back_menu")
      */
     public function home(): Response
     {
-        return $this->render('back/menu.html.twig', [
+        return $this->redirectToRoute('login', [
             'controller_name' => 'BackController',
         ]);
     }
