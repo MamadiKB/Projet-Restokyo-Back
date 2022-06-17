@@ -29,7 +29,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/comments", name="comments_get_list", methods={"GET"})
      */
-    public function getAllComments(CommentRepository $commentRepository)
+    public function browseComments(CommentRepository $commentRepository)
     {
         $commentsList = $commentRepository->findAll();
 
@@ -40,7 +40,7 @@ class CommentController extends AbstractController
      * @Route("/comment/{id}", name="comment_delete", methods={"DELETE"})
      * @ParamConverter("comment", options={"id" = "id"})
      */
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    public function deleteComment(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
         // if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
         //     $commentRepository->remove($comment);
