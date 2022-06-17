@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\District;
-use App\Repository\EstablishmentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EstablishmentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
@@ -142,7 +143,13 @@ class Establishment
      * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $openingTime;
-    
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"establishments_get_validated", "establishment_get_data"})
+     */
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -407,5 +414,26 @@ class Establishment
         $this->openingTime = $openingTime;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        // Date courante
+        $this->updatedAt = new DateTime();
     }
 }
