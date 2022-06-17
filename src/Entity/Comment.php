@@ -16,7 +16,7 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $id;
 
@@ -28,13 +28,13 @@ class Comment
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $published_at;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $content;
 
@@ -60,7 +60,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $user;
 

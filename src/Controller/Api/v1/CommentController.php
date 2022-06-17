@@ -5,6 +5,7 @@ namespace App\Controller\Api\v1;
 use App\Entity\Tag;
 use App\Entity\Comment;
 use App\Entity\Establishment;
+use App\Repository\CommentRepository;
 use App\Repository\EstablishmentRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
@@ -16,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Class used to deal datas from Tags
@@ -25,21 +27,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("establishment/{id}/comments", name="tags_get_list", methods={"GET"})
+     * @Route("/comments", name="comments_get_list", methods={"GET"})
      */
-    public function commentsByEstablishment(TagRepository $tagRepository)
+    public function getAllComments(CommentRepository $commentRepository)
     {
-        $tagsList = $tagRepository->findAll();
+        $commentsList = $commentRepository->findAll();
 
-        return $this->json(['tags' => $tagsList], Response::HTTP_OK, [], ['groups' => 'tags_get_list']);
+        return $this->json(['comments' => $commentsList], Response::HTTP_OK, [], ['groups' => 'comments_get_list']);
+    }
+
+    /**
+     * @Route("/comment/{id}", name="comment_delete", methods={"DELETE"})
+     * @ParamConverter("comment", options={"id" = "id"})
+     */
+    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
+    {
+        // if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+        //     $commentRepository->remove($comment);
+        //     $this->addFlash('success', 'Commentaire supprimé');
+        // }
+
+        $commentRepository->remove($comment);
+
+        return $this->redirectToRoute($request->getRequestUri(), [], Response::HTTP_SEE_OTHER);
+        // return $app->redirect($request->getRequestUri());
+
     }
 
     /**
      * Ajout d'un commentaire à un établissement
      * 
-     * @Route("/establishment/{id}/comments", name="tata", methods={"POST"})
+     * @Route("/establishment/{id}/comments", name="addComment", methods={"POST"})
      */
-    public function tata(
+    public function addComment(
         Establishment $establishment,
         EstablishmentRepository $establishmentRepository,
         Request $request,

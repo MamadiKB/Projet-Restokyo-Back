@@ -135,6 +135,7 @@ class Establishment
      * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      * 
      * @ORM\Column(name="status", type="integer")
+     * @ORM\OrderBy({"updatedAt" = "DESC"})
      */
     private $status;
 

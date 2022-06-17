@@ -29,7 +29,6 @@ class EstablishmentController extends AbstractController
     /**
      * @Route("/establishments", name="establishments_get_list", methods={"GET"})
      * 
-     * 
      */
     public function establishmentsGetValidatedList(EstablishmentRepository $establishmentRepository)
     {
