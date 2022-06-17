@@ -21,7 +21,7 @@ class UserController extends AbstractController
     /**
      * @route ("/profils/{id}", name="back_user_show", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function userGetItem(User $user = null)
+    public function userGetData(User $user = null)
     {
         // 404 ?
         if ($user === null) {

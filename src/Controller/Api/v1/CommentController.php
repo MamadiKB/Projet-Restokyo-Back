@@ -5,22 +5,24 @@ namespace App\Controller\Api\v1;
 use App\Entity\Tag;
 use App\Entity\Comment;
 use App\Entity\Establishment;
-use App\Repository\CommentRepository;
-use App\Repository\EstablishmentRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRepository;
+use App\Repository\CommentRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\EstablishmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
- * Class used to deal datas from Tags
+ * Class used to deal datas from Comments
  * 
  * @Route("/api/v1", name="api_v1_")
  */
@@ -66,12 +68,26 @@ class CommentController extends AbstractController
         SerializerInterface $serializer,
         //Security $security,
         UserRepository $userRepository,
-        ManagerRegistry $doctrine
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator
     ) {
-        // Mettre le commentaire recu en objet comment
+        // Put the comment received as comment object
         $comment = $serializer->deserialize($request->getContent(), Comment::class, 'json');
 
-        //! Passer ton objet au validator si besoin
+        $errors = $validator->validate($comment);
+
+        if (count($errors) > 0) {
+            $cleanErrors = [];
+
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
+                $property = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $cleanErrors[$property][] = $message;
+            }
+
+            return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         // Mettre l'utilisateur courant dans le commentaire
         // $user = $security->getUser();
@@ -79,12 +95,12 @@ class CommentController extends AbstractController
         $comment->setUser($user);
         $comment->setEstablishment($establishment);
 
-        // Persist et flush ton commentaire
+        // Persist and flush the comment
         $entityManager = $doctrine->getManager();
         $entityManager->persist($comment);
         $entityManager->flush();
 
-        // Appel de la méthode de calcul de la moyenne des ratings des commentaires depuis EstablishmentRepository->averageRating()
+        // Call of the average rating method from EstablishmentRepository->averageRating()
         $rating = $establishmentRepository->averageRating($establishment->getId());
         $establishment->setRating($rating[0]['rating']);
         $entityManager->flush();
