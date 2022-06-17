@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -14,62 +16,75 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $username;
+    // /**
+    //  * @ORM\Column(type="string", length=100)
+    //  * @Groups({"establishment_get_data"})
+    //  */
+    // private $username;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $published_at;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
+     * @Groups({"establishment_get_data"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"establishment_get_data"})
      */
     private $picture;
 
     /**
      * @ORM\ManyToOne(targetEntity=Establishment::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * 
      */
     private $establishment;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"establishment_get_data", "comments_get_list"})
      */
     private $user;
+
+    public function __construct()
+    {
+        $this->setPublishedAt(new DateTimeImmutable());
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
+    // public function getUsername(): ?string
+    // {
+    //     return $this->username;
+    // }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
+    // public function setUsername(string $username): self
+    // {
+    //     $this->username = $username;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getPublishedAt(): ?\DateTimeImmutable
     {

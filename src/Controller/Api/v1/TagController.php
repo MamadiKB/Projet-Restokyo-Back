@@ -30,17 +30,17 @@ class TagController extends AbstractController
     /**
      * @Route("/tags/{id}", name="tags_get_establishments", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function establishmentsByTag(Tag $tag = null)
-    {
-        // 404 ?
-        if ($tag === null) {
+    // public function establishmentsByTag(Tag $tag = null)
+    // {
+    //     // 404 ?
+    //     if ($tag === null) {
             
-            return $this->json(['error' => 'Tag non trouvé.'], Response::HTTP_NOT_FOUND);
-        }
+    //         return $this->json(['error' => 'Tag non trouvé.'], Response::HTTP_NOT_FOUND);
+    //     }
 
                 
-        return $this->json($tag, Response::HTTP_OK, [], ['groups' => 'tags_get_establishments']);
-    }
+    //     return $this->json($tag, Response::HTTP_OK, [], ['groups' => 'tags_get_establishments']);
+    // }
 
 
 }

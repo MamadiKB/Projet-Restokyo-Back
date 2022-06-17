@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # index:
 #    path: /
 #    controller: App\Controller\BackController::home
+=======
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+>>>>>>> a1683add2af5d5e4bc3ff7e7bfc976dc12111c3a
 
 # Road use by LexikJWT to get our JSON
 api_login_check:

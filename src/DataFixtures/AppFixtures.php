@@ -122,7 +122,7 @@ class AppFixtures extends Fixture
 
             $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
             $establishment->setDistrict($randomDistrict);
-            $establishment->setStatus(mt_rand(0,1));
+            $establishment->setStatus(mt_rand(0,2));
 
 
             //!\ TAGS to ESTABLISHMENTS
@@ -135,18 +135,20 @@ class AppFixtures extends Fixture
 
             //!\ COMMENTS (and ratings) to ESTABLISHMENTS
             //TODO To activate when relation is done 
-            // for ($j = 0; $j < mt_rand(15, 20); $j++) {
-            //     $comment = new Comment();
+            for ($j = 0; $j < mt_rand(15, 20); $j++) {
+                $comment = new Comment();
 
-            //     $comment
-            //         ->setUsername($faker->userName())
-            //         ->setPublishedAt(DateTimeImmutable::createFromMutable($faker->datetime()))
-            //         ->setContent($faker->realTextBetween(100, 300))
-            //         ->setRating(mt_rand(2, 5))
-            //         ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]));
+                $comment
+                    // ->setUsername($faker->userName())
+                    ->setPublishedAt(DateTimeImmutable::createFromMutable($faker->datetime()))
+                    ->setContent($faker->realTextBetween(100, 300))
+                    ->setRating($faker->randomFloat(1, 1, 5))
+                    ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
+                    ->setUser($user->setUsername($faker->userName()))
+                    ->setEstablishment($establishment->setName($faker->establishmentName()));
 
-            //     $manager->persist($comment);
-            // }
+                $manager->persist($comment);
+            }
 
             $manager->persist($establishment);
 

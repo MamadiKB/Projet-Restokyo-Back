@@ -54,7 +54,10 @@ security:
                 # "login" is the name of the route created previously
                 login_path: login
                 check_path: login
+<<<<<<< HEAD
                 
+=======
+>>>>>>> a1683add2af5d5e4bc3ff7e7bfc976dc12111c3a
 
             logout:
                 # Correspond au nom de la route, name="logout"

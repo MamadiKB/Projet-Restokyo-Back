@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\District;
-use App\Repository\EstablishmentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EstablishmentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
@@ -23,104 +24,107 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
      */
     private $price;
 
     /**
+     * Used to put in front form to let the user enter datas about the etablishment he proposes (website, price, phone, etc.)
+     * 
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      */
-    private $opening_days;
+    private $useful_info;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
-     */
-    private $noon_opening_time;
+    // /**
+    //  * @ORM\Column(type="text", nullable=true)
+    //  * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+    //  */
+    // private $noon_opening_time;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
-     */
-    private $evening_opening_time;
+    // /**
+    //  * @ORM\Column(type="text", nullable=true)
+    //  * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+    //  */
+    // private $evening_opening_time;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $website;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
      */
     private $rating;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
      */
     private $picture;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="establishment", orphanRemoval=true)
+     * @Groups({"establishment_get_data"})
      */
     private $comments;
 
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
 
      */
     private $district;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="establishments")
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $tags;
 
@@ -128,17 +132,25 @@ class Establishment
      *
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
      * 
      * @ORM\Column(name="status", type="integer")
+     * @ORM\OrderBy({"updatedAt" = "DESC"})
      */
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=OpeningTime::class, inversedBy="establishments")
-     * @Groups({"establishments_get_list", "establishment_get_data"})
+     * @ORM\Column(type="string", length=200, nullable=true)
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $openingTime;
-    
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"establishments_get_validated", "establishment_get_data"})
+     */
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -217,38 +229,14 @@ class Establishment
         return $this;
     }
 
-    public function getOpeningDays(): ?string
+    public function getUsefulInfo(): ?string
     {
-        return $this->opening_days;
+        return $this->useful_info;
     }
 
-    public function setOpeningDays(?string $opening_days): self
+    public function setUsefulInfo(?string $useful_info): self
     {
-        $this->opening_days = $opening_days;
-
-        return $this;
-    }
-
-    public function getNoonOpeningTime(): ?string
-    {
-        return $this->noon_opening_time;
-    }
-
-    public function setNoonOpeningTime(?string $noon_opening_time): self
-    {
-        $this->noon_opening_time = $noon_opening_time;
-
-        return $this;
-    }
-
-    public function getEveningOpeningTime(): ?string
-    {
-        return $this->evening_opening_time;
-    }
-
-    public function setEveningOpeningTime(?string $evening_opening_time): self
-    {
-        $this->evening_opening_time = $evening_opening_time;
+        $this->useful_info = $useful_info;
 
         return $this;
     }
@@ -409,15 +397,44 @@ class Establishment
         return $this;
     }
 
-    public function getOpeningTime(): ?OpeningTime
+    /**
+     * Get the value of openingTime
+     */ 
+    public function getOpeningTime()
     {
         return $this->openingTime;
     }
 
-    public function setOpeningTime(?OpeningTime $openingTime): self
+    /**
+     * Set the value of openingTime
+     *
+     * @return  self
+     */ 
+    public function setOpeningTime($openingTime)
     {
         $this->openingTime = $openingTime;
 
         return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        // Date courante
+        $this->updatedAt = new DateTime();
     }
 }
