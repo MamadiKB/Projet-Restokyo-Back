@@ -41,11 +41,11 @@ security:
             lazy: true
             provider: app_user_provider # users_in_memory
 
-            json_login:
-                # api_login is a route we will create below
-                check_path: api_login
-                username_path: email
-                password_path: password
+            # json_login:
+            #     # api_login is a route we will create below
+            #     check_path: api_login
+            #     username_path: email
+            #     password_path: password
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
