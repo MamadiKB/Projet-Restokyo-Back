@@ -116,6 +116,20 @@ class EstablishmentRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+
+    public function averageRating($id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        // DQL Doctrine Query Language
+        $query = $entityManager->createQuery(
+            'SELECT avg(c.rating) as rating
+            FROM App\Entity\Comment c
+            WHERE c.establishment = :id'
+        )->setParameter('id', $id);
+
+        return $query->getResult();
+    }
    
 
 
