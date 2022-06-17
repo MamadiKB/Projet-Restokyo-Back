@@ -1,13 +1,13 @@
-{% extends 'back/menu.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit District{% endblock %}
 
 {% block body_back %}
     <h1>Edit District</h1>
 
-    {{ include('back/district/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('district/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('back_district_index') }}" class="btn btn-primary">back to list</a>
 
-    {{ include('back/district/_delete_form.html.twig') }}
+    {{ include('district/_delete_form.html.twig') }}
 {% endblock %}

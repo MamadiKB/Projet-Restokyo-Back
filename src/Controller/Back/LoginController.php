@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Back;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +27,14 @@ class LoginController extends AbstractController
             'error'         => $error,
         ]);
         
+    }
+
+    /**
+     * @Route("/menu", name="menu", methods={"GET"})
+     */
+    public function menu(): Response
+    {
+        return $this->render('menu.html.twig');
     }
 
     /**

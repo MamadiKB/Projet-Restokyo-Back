@@ -1,11 +1,11 @@
-{% extends 'back/menu.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit establishment{% endblock %}
 
 {% block body_back %}
     <h1>Edit establishment</h1>
 
-    {{ include('back/establishment/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('establishment/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('back_establishment_index') }}" class="btn btn-primary">back to list</a>
 
