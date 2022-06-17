@@ -67,6 +67,7 @@ class Tag
     {
         if (!$this->establishments->contains($establishment)) {
             $this->establishments[] = $establishment;
+            
         }
 
         return $this;

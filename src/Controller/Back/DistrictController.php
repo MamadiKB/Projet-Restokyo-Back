@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/back/quartiers")
+ * @Route("/quartiers")
  */
 class DistrictController extends AbstractController
 {
@@ -23,7 +23,7 @@ class DistrictController extends AbstractController
      */
     public function index(DistrictRepository $districtRepository): Response
     {
-        return $this->render('back/district/index.html.twig', [
+        return $this->render('district/index.html.twig', [
             'districts' => $districtRepository->findAll(),
         ]);
     }
@@ -46,7 +46,7 @@ class DistrictController extends AbstractController
             return $this->redirectToRoute('back_district_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/district/new.html.twig', [
+        return $this->renderForm('district/new.html.twig', [
             'district' => $district,
             'form' => $form,
         ]);
@@ -59,7 +59,7 @@ class DistrictController extends AbstractController
      */
     public function show(District $district): Response
     {
-        return $this->render('back/district/show.html.twig', [
+        return $this->render('district/show.html.twig', [
             'district' => $district,
         ]);
     }
@@ -84,7 +84,7 @@ class DistrictController extends AbstractController
             return $this->redirectToRoute('back_district_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/district/edit.html.twig', [
+        return $this->renderForm('district/edit.html.twig', [
             'district' => $district,
             'form' => $form,
         ]);

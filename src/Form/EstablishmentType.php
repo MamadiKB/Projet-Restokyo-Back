@@ -30,8 +30,8 @@ class EstablishmentType extends AbstractType
             ->add('name', TextType::class)
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Restaurant' => 'Restaurant',
-                    'Isakaya' => 'Isakaya',
+                    'Restaurant' => 'restaurant',
+                    'Isakaya' => 'isakaya',
                 ],
                 'expanded' => true,
             ])
@@ -46,6 +46,13 @@ class EstablishmentType extends AbstractType
                     return $er->createQueryBuilder('d')
                         ->orderBy('d.name', 'ASC');
                 },
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' =>[
+                    'A valider' => 0,
+                    'Activer' => 1,
+                    'Fermer' => 2,
+                ]
             ])
 
             // ->add('opening_days',ChoiceType::class, [
