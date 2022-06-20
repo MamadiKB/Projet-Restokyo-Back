@@ -60,47 +60,47 @@ class EstablishmentController extends AbstractController
         return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_data']);
     }
 
-    // /**
-    //  * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
-    //  */
-    // public function establishmentsPostItem(Request $request,
-    // SerializerInterface $serializer,
-    // ManagerRegistry $doctrine,
-    // ValidatorInterface $validator)
-    // {
+    /**
+     * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function establishmentsPostItem(Request $request,
+    SerializerInterface $serializer,
+    ManagerRegistry $doctrine,
+    ValidatorInterface $validator)
+    {
         
-    //     $jsonContent = $request->getContent();
-    //     $establishment = $serializer->deserialize($jsonContent, Establishment::class, 'json');
-    //     $errors = $validator->validate($establishment);
+        $jsonContent = $request->getContent();
+        $establishment = $serializer->deserialize($jsonContent, Establishment::class, 'json');
+        $errors = $validator->validate($establishment);
 
-    //     if (count($errors) > 0) {
-    //         $cleanErrors = [];
+        if (count($errors) > 0) {
+            $cleanErrors = [];
 
-    //         /** @var ConstraintViolation $error */
-    //         foreach ($errors as $error) {
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
 
-    //             $property = $error->getPropertyPath();
-    //             $message = $error->getMessage();
-    //             $cleanErrors[$property][] = $message;
-    //             // array_push($cleanErrors[$property], $message);
-    //         }
+                $property = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $cleanErrors[$property][] = $message;
+                // array_push($cleanErrors[$property], $message);
+            }
 
-    //         return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
-    //     }
+            return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-    //     // Saving into DB
-    //     $em = $doctrine->getManager();
-    //     $em->persist($establishment);
-    //     $em->flush();
+        // Saving into DB
+        $em = $doctrine->getManager();
+        $em->persist($establishment);
+        $em->flush();
 
-    //     return $this->json($establishment, Response::HTTP_CREATED, [
-    //             'Location' => $this->generateUrl('api_v1_establishments_get_list', [
-    //                 'id' => $establishment->getId()
-    //                 ]
-    //             )
-    //         ], ['groups' => 'establishments_get_list']
-    //     );
-    // }
+        return $this->json($establishment, Response::HTTP_CREATED, [
+                'Location' => $this->generateUrl('api_v1_establishments_get_list', [
+                    'id' => $establishment->getId()
+                    ]
+                )
+            ], ['groups' => 'establishments_get_list']
+        );
+    }
 
     /**
      * @Route("/establishments/{type}", name="establishment_get_by_type", methods={"GET"})
