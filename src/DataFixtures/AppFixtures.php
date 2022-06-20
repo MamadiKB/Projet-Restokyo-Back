@@ -48,7 +48,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setEmail('kurosaki@admin.com');
         $admin->setPassword('$2y$13$k.VR08yUFrLSDQ1FI5jCcet6alcnXTA74cmKaQt6im.bnkOZr4j2K');
-        $admin->setUsername('15');
+        $admin->setUsername('Fraise');
         $admin->setLastname('Kurosaki');
         $admin->setFirstname('Ichigo');
         $admin->setRoles(["ROLE_ADMIN"]);

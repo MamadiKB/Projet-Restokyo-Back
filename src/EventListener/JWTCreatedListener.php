@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
@@ -16,13 +17,16 @@ class JWTCreatedListener
      * @var RequestStack
      */
     private $requestStack;
+
+    private UserInterface $user;
    
     /**
      * @param RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, Security $security)
     {
-        $this->requestStack = $requestStack;        
+        $this->requestStack = $requestStack;
+        $this->user = $security->getUser();        
     }
 
     
@@ -43,6 +47,14 @@ class JWTCreatedListener
         $payload['ip'] = $request->getClientIps();
         $payload['URI'] = $request->getUri();
         $payload['URI Request'] = $request->getRequestUri();
+
+        $payload['lastname'] = $this->user->getLastname();
+        $payload['firstname'] = $this->user->getFirstname();
+        $payload['email'] = $this->user->getEmail();
+        $payload['birthdate'] = $this->user->getBirthdate();
+        $payload['nationality'] = $this->user->getNationality();
+        $payload['picture'] = $this->user->getPicture();
+
 
         $event->setData($payload);
 
