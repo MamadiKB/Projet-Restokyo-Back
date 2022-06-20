@@ -25,37 +25,37 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $price;
 
@@ -93,7 +93,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $rating;
 
@@ -105,7 +105,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $picture;
 
@@ -118,7 +118,7 @@ class Establishment
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
 
      */
     private $district;
@@ -158,6 +158,11 @@ class Establishment
      */
     private $pictures;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="establishments")
+     */
+    private $users;
+
 
     public function __construct()
     {
@@ -165,6 +170,7 @@ class Establishment
         $this->tags = new ArrayCollection();
         $this->status = 0;
         $this->pictures = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -472,6 +478,30 @@ class Establishment
                 $picture->setEstablishment(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }

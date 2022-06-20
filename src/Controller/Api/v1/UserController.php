@@ -3,13 +3,17 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Establishment;
+use App\Service\FavoritesManager;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\EstablishmentRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**    
  * Class used to deal datas from User
@@ -49,7 +53,7 @@ class UserController extends AbstractController
 
     
     /**
-     * @route ("/profils/ajouter", name="back_user_add", methods={"POST"}, requirements={"id"="\d+"})
+     * @route ("/profils/ajouter", name="back_user_add", methods={"POST"})
      */
     public function userPostlist(User $user,
     Request $request,
@@ -117,5 +121,31 @@ class UserController extends AbstractController
             // Pour éviter les références circulaires
             //['groups' => 'user_get_item']
         );
+    }
+
+    /**
+     * @route ("/favorites", name="favorites", methods={"POST"})
+     */
+    public function handleFavorites(Establishment $establishment, Request $request, Security $security, SerializerInterface $serializer, ValidatorInterface $validator)
+    {
+        $establishment = $serializer->deserialize($request->getContent(), Establishment::class, 'json');
+
+        $errors = $validator->validate($establishment);
+        if (count($errors) > 0) {
+            $cleanErrors = [];
+
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
+                $property = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $cleanErrors[$property][] = $message;
+            }
+
+            return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $user = $security->getUser();
+        $establishment->addUser();
+        
     }
 }

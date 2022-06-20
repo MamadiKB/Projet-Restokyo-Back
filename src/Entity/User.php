@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -74,6 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Choice({"ROLE_USER", "ROLE_ADMIN"}, multiple=true)
      */
     private $roles = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Establishment::class, mappedBy="users")
+     */
+    private $establishments;
+
+    public function __construct()
+    {
+        $this->establishments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -229,5 +241,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Establishment>
+     */
+    public function getEstablishments(): Collection
+    {
+        return $this->establishments;
+    }
+
+    public function addEstablishment(Establishment $establishment): self
+    {
+        if (!$this->establishments->contains($establishment)) {
+            $this->establishments[] = $establishment;
+            $establishment->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstablishment(Establishment $establishment): self
+    {
+        if ($this->establishments->removeElement($establishment)) {
+            $establishment->removeUser($this);
+        }
+
+        return $this;
     }
 }

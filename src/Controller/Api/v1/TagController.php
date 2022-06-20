@@ -27,6 +27,19 @@ class TagController extends AbstractController
         return $this->json(['tags' => $tagsList], Response::HTTP_OK, [], ['groups' => 'tags_get_list']);
     }
 
+
+    /**
+     * @Route("/tags/{id}", name="tags_get_datas", methods={"GET"})
+     */
+    public function tagGetDatas(Tag $tag)
+    {
+        if ($tag === null) {
+            return $this->json(['error' => 'Endroit qui n\'existe pas encore !'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json($tag, Response::HTTP_OK, [], ['groups' => 'tag_get_data']);
+    }
+
     /**
      * @Route("/tags/{id}", name="tags_get_establishments", methods={"GET"}, requirements={"id"="\d+"})
      */
