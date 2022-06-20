@@ -132,7 +132,7 @@ class Establishment
      *
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
-     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments", "establishments_get_validated"})
      * 
      * @ORM\Column(name="status", type="integer")
      * @ORM\OrderBy({"updatedAt" = "DESC"})

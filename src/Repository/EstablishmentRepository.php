@@ -111,10 +111,12 @@ class EstablishmentRepository extends ServiceEntityRepository
     public function findBestRatingDsc()
     {
         return $this->createQueryBuilder('e')
-        ->orderBy('e.rating', 'DSC')
+        ->andWhere('e.status = 1')
+        ->orderBy('e.rating', 'DESC')
         ->setMaxResults(3)
         ->getQuery()
         ->getResult();
+        
     }
 
     public function averageRating($id)
