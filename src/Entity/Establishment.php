@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
@@ -151,12 +152,19 @@ class Establishment
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="establishment")
+     * @Groups({"establishment_get_data"})
+     */
+    private $pictures;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->status = 0;
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -436,5 +444,35 @@ class Establishment
     {
         // Date courante
         $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setEstablishment($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getEstablishment() === $this) {
+                $picture->setEstablishment(null);
+            }
+        }
+
+        return $this;
     }
 }

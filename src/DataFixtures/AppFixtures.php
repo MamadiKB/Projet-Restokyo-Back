@@ -13,17 +13,18 @@ use App\Entity\Establishment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\RestokyoProvider;
+use App\Entity\Picture;
 use DateTime;
 use DateTimeInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
-    private $newSlugger;
+    private $slugger;
 
     public function __construct(SluggerInterface $slugger)
     {
-        $this->newSlugger = $slugger;
+        $this->slugger = $slugger;
     }
 
     public function load(ObjectManager $manager): void
@@ -112,7 +113,8 @@ class AppFixtures extends Fixture
             $establishment->setName($faker->unique()->establishmentName());
             $establishment->setDescription($faker->text(100));
             $establishment->setAddress($faker->address());
-            $establishment->setSlug($this->newSlugger->slug($establishment->getName())->lower());
+            $establishment->setSlug($this->slugger->slug($establishment->getName())->lower());
+
             // 1/2 chance to have a type instead of another
             $establishment->setType($faker->randomElement(['restaurant', 'izakaya']));
             $establishment->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300');
@@ -135,7 +137,7 @@ class AppFixtures extends Fixture
 
             //!\ COMMENTS (and ratings) to ESTABLISHMENTS
             //TODO To activate when relation is done 
-            for ($j = 0; $j < mt_rand(15, 20); $j++) {
+            for ($c = 0; $c < mt_rand(0, 5); $c++) {
                 $comment = new Comment();
 
                 $comment
@@ -148,6 +150,18 @@ class AppFixtures extends Fixture
                     ->setEstablishment($establishment->setName($faker->establishmentName()));
 
                 $manager->persist($comment);
+            }
+
+            //!\ PICTURES TO ESTABLISHMENTS
+
+            for ($p = 0; $p < mt_rand(0, 5); $p++) {
+                $picture = new Picture();
+
+                $picture
+                ->setUrl('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+                ->setEstablishment($establishment->setName($faker->establishmentName()));
+
+                $manager->persist($picture);
             }
 
             $manager->persist($establishment);
