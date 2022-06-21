@@ -111,10 +111,12 @@ class EstablishmentRepository extends ServiceEntityRepository
     public function findBestRatingDsc()
     {
         return $this->createQueryBuilder('e')
-        ->orderBy('e.rating', 'DSC')
+        ->andWhere('e.status = 1')
+        ->orderBy('e.rating', 'DESC')
         ->setMaxResults(3)
         ->getQuery()
         ->getResult();
+        
     }
 
     public function averageRating($id)
@@ -131,6 +133,14 @@ class EstablishmentRepository extends ServiceEntityRepository
         return $query->getResult();
     }
    
+
+    // SELECT establishment.ID, establishment.name, establishment.status, establishment.type, establishment.description, establishment.address, establishment.price, establishment.rating, establishment.picture,tag.name
+    // FROM establishment
+    // LEFT OUTER JOIN tag_establishment
+    //   ON establishment.ID = tag_establishment.establishment_id
+    // LEFT OUTER JOIN tag
+    //   ON tag_establishment.tag_id = tag.ID
+    // WHERE establishment.status = 1
 
 
 //    /**

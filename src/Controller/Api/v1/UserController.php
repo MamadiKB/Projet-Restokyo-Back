@@ -3,10 +3,14 @@
 namespace App\Controller\Api\v1;
 
 use App\Entity\User;
+use App\Entity\Establishment;
+use App\Service\FavoritesManager;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\EstablishmentRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -130,9 +134,8 @@ class UserController extends AbstractController
         return $this->json(['validate' => 'Votre profil a été supprimé.'], Response::HTTP_OK);
     }
 
-    
     /**
-     * @route ("/profils/ajouter", name="back_user_add", methods={"POST"}, requirements={"id"="\d+"})
+     * @route ("profil/{id}/favorites-list", name="favorites_list", methods={"POST"}, requirements={"id"="\d+"})
      */
     public function userPostItem(Request $request,
     SerializerInterface $serializer,

@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
@@ -24,37 +25,37 @@ class Establishment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_list"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_list"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $price;
 
@@ -92,7 +93,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $rating;
 
@@ -104,7 +105,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $picture;
 
@@ -117,7 +118,7 @@ class Establishment
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
 
      */
     private $district;
@@ -132,7 +133,7 @@ class Establishment
      *
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
-     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments", "establishments_get_validated"})
      * 
      * @ORM\Column(name="status", type="integer")
      * @ORM\OrderBy({"updatedAt" = "DESC"})
@@ -151,12 +152,25 @@ class Establishment
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="establishment")
+     * @Groups({"establishment_get_data"})
+     */
+    private $pictures;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="establishments")
+     */
+    private $users;
+
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->tags = new ArrayCollection();
+        $this->tags = new ArrayCollection();https://symfony.com/doc/current/components/serializer.html#usage
         $this->status = 0;
+        $this->pictures = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -436,5 +450,59 @@ class Establishment
     {
         // Date courante
         $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setEstablishment($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getEstablishment() === $this) {
+                $picture->setEstablishment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
+
+        return $this;
     }
 }

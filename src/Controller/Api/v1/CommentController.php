@@ -66,7 +66,7 @@ class CommentController extends AbstractController
         EstablishmentRepository $establishmentRepository,
         Request $request,
         SerializerInterface $serializer,
-        //Security $security,
+        Security $security,
         UserRepository $userRepository,
         ManagerRegistry $doctrine,
         ValidatorInterface $validator
@@ -89,9 +89,9 @@ class CommentController extends AbstractController
             return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        // Mettre l'utilisateur courant dans le commentaire
-        // $user = $security->getUser();
-        $user = $userRepository->find(1);
+        // Put the current user in the comment
+        $user = $security->getUser();
+        // $user = $userRepository->find(1);
         $comment->setUser($user);
         $comment->setEstablishment($establishment);
 
