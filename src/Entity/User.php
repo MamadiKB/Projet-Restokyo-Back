@@ -70,10 +70,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $picture;
 
     /**
-     * @ORM\Column(type="json", options={"default" : "ROLE_USER"})
+     * @ORM\Column(type="json")
      * @Assert\Choice({"ROLE_USER", "ROLE_ADMIN"}, multiple=true)
      */
-    private $roles;
+    private $roles = [];
 
     public function getId(): ?int
     {
