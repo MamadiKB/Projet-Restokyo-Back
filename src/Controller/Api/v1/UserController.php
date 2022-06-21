@@ -26,11 +26,37 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
  */
 class UserController extends AbstractController
 {
+
+    //! TO DELETE FOR PROD
     /**
-     * @route ("/profils/{id}", name="back_user_show", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/profils", name="users", methods={"GET"})
      */
-    public function userGetData(User $user = null)
+    public function usersList(UserRepository $userRepository)
     {
+        $usersList = $userRepository->findAll();
+
+        return $this->json(['usersList' => $usersList], Response::HTTP_OK);
+    }
+
+
+    /**
+     * @route ("/profils/{id}", name="user_show", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function userGetData(User $user = null, Security $security)
+    {
+        /**
+         * Retrive the current connected user
+         * @var User
+         */
+        //$currentUser = $security->getUser();
+        
+
+        //$this->denyAccessUnlessGranted('PROFILE_VIEW', $user);
+
+        if ($security->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Non autorisé.');
+        }
+        
         // 404 ?
         if ($user === null) {
             return $this->json(['error' => 'Utilisateur non trouvé.'], Response::HTTP_NOT_FOUND);
@@ -40,22 +66,28 @@ class UserController extends AbstractController
     }
 
     /**
-     * @route ("/profils/{id}", name="back_user_edit", methods={"PUT"}, requirements={"id"="\d+"})
+     * @route ("/profils/{id}", name="user_edit", methods={"PUT"}, requirements={"id"="\d+"})
      */
     public function userPutItem(User $user, Request $request,
     SerializerInterface $serializer,
     ManagerRegistry $doctrine,
     ValidatorInterface $validator,
-    UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager, Security $security)
+    UserPasswordHasherInterface $passwordHasher,
+    JWTTokenManagerInterface $JWTManager,
+    Security $security)
     {
         /**
          * Retrive the current connected user
          * @var User
          */
         $currentUser = $security->getUser();
+
+        if ($currentUser !== $user) {
+            throw $this->createAccessDeniedException('Non autorisé.');
+        }
         
         $jsonContent = $request->getContent();
-        $userJson = $serializer->deserialize($jsonContent, User::class, 'json');
+        $user = $serializer->deserialize($jsonContent, User::class, 'json');
         $errors = $validator->validate($user);
 
         if (count($errors) > 0) {
@@ -79,7 +111,7 @@ class UserController extends AbstractController
         if (!empty($jsonDecode->password)){
             $user->setPassword($jsonDecode->password);
         }
-        $user->setUsername($jsonDecode->username);
+        $user->setPseudo($jsonDecode->pseudo);
         $user->setFirstname($jsonDecode->firstname);
         $user->setLastname($jsonDecode->lastname);
         $user->setNationality($jsonDecode->nationality);
@@ -101,7 +133,7 @@ class UserController extends AbstractController
 
         if (!empty($emailChange)){
             $newJWT = $JWTManager->create($currentUser);
-            return $this->json(['token' => $newJWT, 'user' => $user], Response::HTTP_OK, [], ['Location' => $this->generateUrl('api_v1_back_user_show', ['id' => $user->getId()]), "json_encode_option" => JSON_UNESCAPED_SLASHES]);
+            return $this->json(['token' => $newJWT, 'user' => $user], Response::HTTP_OK, [], ['Location' => $this->generateUrl('api_v1_user_show', ['id' => $user->getId()]), "json_encode_option" => JSON_UNESCAPED_SLASHES]);
         }
 
         $user->setRoles(["ROLE_USER"]);
@@ -112,18 +144,23 @@ class UserController extends AbstractController
         $em->flush();
 
         return $this->json(
-            ['user' => $user], Response::HTTP_OK, [], ['Location' => $this->generateUrl('api_v1_back_user_show', ['id' => $user->getId()]), "json_encode_option" => JSON_UNESCAPED_SLASHES]
+            ['user' => $user], Response::HTTP_OK, [], ['Location' => $this->generateUrl('user_show', ['id' => $user->getId()]), "json_encode_option" => JSON_UNESCAPED_SLASHES]
             
-            // Pour éviter les références circulaires
-            //['groups' => 'user_get_item']
         );
     }
 
     /**
-     * @route ("/profils/{id}", name="back_user_delete", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @route ("/profils/{id}", name="user_delete", methods={"DELETE"}, requirements={"id"="\d+"})
      */
-    public function userDeleteItem(User $user, ManagerRegistry $doctrine)
+    public function userDeleteItem(User $user,
+    ManagerRegistry $doctrine,
+    Security $security)
     {
+
+        if ($security->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Non autorisé.');
+        }
+
         if ($user === null) {
             return $this->json(['error' => 'Utilisateur non trouvé.'], Response::HTTP_NOT_FOUND);
         }
@@ -134,7 +171,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @route ("profil/{id}/favorites-list", name="favorites_list", methods={"POST"}, requirements={"id"="\d+"})
+     * @route ("/profil/ajouter", name="user_add", methods={"POST"})
      */
     public function userPostItem(Request $request,
     SerializerInterface $serializer,
@@ -184,7 +221,7 @@ class UserController extends AbstractController
             // REST demande un header Location + l'URL de la ressource créée
             // (un tableau clé-valeur)
             [
-                'Location' => $this->generateUrl('api_v1_back_user_show', ['id' => $user->getId()])
+                'Location' => $this->generateUrl('api_v1_user_show', ['id' => $user->getId()])
             ],
             // Pour éviter les références circulaires
             //['groups' => 'user_get_item']

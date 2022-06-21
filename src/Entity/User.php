@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email", "username"})
+ * @UniqueEntity(fields={"email", "pseudo"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"establishment_get_data", "comments_get_list"})
      * 
      */
-    private $username;
+    private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -124,12 +124,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function getPseudo(): string
     {
-        $this->username = $username;
+        return (string) $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
