@@ -36,6 +36,7 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"tags_get_list"})
      */
     private $slug;
 
