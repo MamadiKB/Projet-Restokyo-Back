@@ -29,6 +29,17 @@ class TagController extends AbstractController
         return $this->json($tagsList, Response::HTTP_OK, [], ['groups' => 'tags_get_list']);
     }
 
+    // /**
+    //  * @Route("/tags/test", name="tags_test", methods={"GET"})
+    //  */
+    // public function tagsTest(TagRepository $tagRepository, EstablishmentRepository $establishmentRepository)
+    // {
+
+    //     $tagsList = $tagRepository->findEstablishmentsByStatus(1);
+
+    //     return $this->json($tagsList, Response::HTTP_OK, [], ['groups' => 'tags_get_list']);
+    // }
+
 
     /**
      * @Route("/tags/{id}", name="tags_get_datas", methods={"GET"})

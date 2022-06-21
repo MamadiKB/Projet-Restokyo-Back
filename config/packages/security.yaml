@@ -84,6 +84,7 @@ security:
 
         # API road 
         - { path: ^/api/v1/new, roles: ROLE_ADMIN, methods: POST}
+        # - { path: ^/api/v1/profils, roles: ROLE_USER}
 
     role_hierarchy:
         # ADMIN > USER

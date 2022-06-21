@@ -99,7 +99,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $slug;
 
@@ -133,7 +133,7 @@ class Establishment
      *
      * Used to set a validation status on each establishment
      * If 0 = not validated, if 1 = validated (so shown on page)
-     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments", "establishments_get_validated"})
+     * @Groups({"establishments_get_list", "establishment_get_data", "tags_get_establishments", "establishments_get_validated", "tags_get_list"})
      * 
      * @ORM\Column(name="status", type="integer")
      * @ORM\OrderBy({"updatedAt" = "DESC"})
