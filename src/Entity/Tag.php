@@ -17,22 +17,27 @@ class Tag
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
+     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
+     * @Groups({"tags_get_list", "establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Establishment::class, inversedBy="tags")
-     * @Groups({"tag_get_data"})
+     * @Groups({"tags_get_list"})
      * 
      */
     private $establishments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -77,6 +82,18 @@ class Tag
     public function removeEstablishment(Establishment $establishment): self
     {
         $this->establishments->removeElement($establishment);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

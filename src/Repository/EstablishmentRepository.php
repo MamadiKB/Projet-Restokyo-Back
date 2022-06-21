@@ -134,6 +134,14 @@ class EstablishmentRepository extends ServiceEntityRepository
     }
    
 
+    // SELECT establishment.ID, establishment.name, establishment.status, establishment.type, establishment.description, establishment.address, establishment.price, establishment.rating, establishment.picture,tag.name
+    // FROM establishment
+    // LEFT OUTER JOIN tag_establishment
+    //   ON establishment.ID = tag_establishment.establishment_id
+    // LEFT OUTER JOIN tag
+    //   ON tag_establishment.tag_id = tag.ID
+    // WHERE establishment.status = 1
+
 
 //    /**
 //     * @return Establishment[] Returns an array of Establishment objects

@@ -149,7 +149,7 @@ class RestokyoProvider
      /**
      * Return an establishment's name
      */
-    public function establishmentName()
+    public function establishmentsName()
     {
         return $this->establishments[array_rand($this->establishments)];
     }

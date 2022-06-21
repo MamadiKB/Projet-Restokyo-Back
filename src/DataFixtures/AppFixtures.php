@@ -78,7 +78,8 @@ class AppFixtures extends Fixture
 
             // Creating a new tag and setting it as unique to avoid duplicates
             $tag = new Tag();
-            $tag->setName($faker->unique()->establishmentTag());
+            $tag->setName($faker->unique()->establishmentTag())
+            ->setSlug($this->slugger->slug($tag->getName())->lower());
 
             // Filling the array
             $tagsList[] = $tag;
@@ -110,21 +111,19 @@ class AppFixtures extends Fixture
 
         for ($e = 1; $e <= 40; $e++) {
             $establishment = new Establishment();
-            $establishment->setName($faker->unique()->establishmentName());
-            $establishment->setDescription($faker->text(100));
-            $establishment->setAddress($faker->address());
-            $establishment->setSlug($this->slugger->slug($establishment->getName())->lower());
+            $establishment
+            ->setName($faker->unique()->establishmentsName())
+            ->setSlug($this->slugger->slug($establishment->getName())->lower())
+            ->setDescription($faker->text(100))
+            ->setAddress($faker->address())
+            
 
             // 1/2 chance to have a type instead of another
-            $establishment->setType($faker->randomElement(['restaurant', 'izakaya']));
-            $establishment->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300');
-            $establishment->setRating($faker->randomFloat(1, 1, 5));
-            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
-            $establishment->setDistrict($randomDistrict);
-
-            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
-            $establishment->setDistrict($randomDistrict);
-            $establishment->setStatus(mt_rand(0,2));
+            ->setType($faker->randomElement(['restaurant', 'izakaya']))
+            ->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+            ->setRating($faker->randomFloat(1, 1, 5))
+            ->setDistrict($districtsList[mt_rand(0, count($districtsList) - 1)])
+            ->setStatus(mt_rand(0,2));
 
 
             //!\ TAGS to ESTABLISHMENTS
@@ -147,7 +146,7 @@ class AppFixtures extends Fixture
                     ->setRating($faker->randomFloat(1, 1, 5))
                     ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
                     ->setUser($user->setUsername($faker->userName()))
-                    ->setEstablishment($establishment->setName($faker->establishmentName()));
+                    ->setEstablishment($establishment->setName($faker->establishmentsName()));
 
                 $manager->persist($comment);
             }
@@ -159,7 +158,7 @@ class AppFixtures extends Fixture
 
                 $picture
                 ->setUrl('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
-                ->setEstablishment($establishment->setName($faker->establishmentName()));
+                ->setEstablishment($establishment->setName($faker->establishmentsName()));
 
                 $manager->persist($picture);
             }

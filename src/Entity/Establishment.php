@@ -31,31 +31,31 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "districts_get_establishments", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_list"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=200)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_list"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $price;
 
@@ -93,7 +93,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $rating;
 
@@ -105,7 +105,7 @@ class Establishment
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
     private $picture;
 
@@ -118,7 +118,7 @@ class Establishment
     /**
      * @ORM\ManyToOne(targetEntity=District::class, inversedBy="establishments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tag_get_data"})
+     * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
 
      */
     private $district;
@@ -167,7 +167,7 @@ class Establishment
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->tags = new ArrayCollection();
+        $this->tags = new ArrayCollection();https://symfony.com/doc/current/components/serializer.html#usage
         $this->status = 0;
         $this->pictures = new ArrayCollection();
         $this->users = new ArrayCollection();
