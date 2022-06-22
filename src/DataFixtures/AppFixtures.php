@@ -120,7 +120,7 @@ class AppFixtures extends Fixture
 
             // 1/2 chance to have a type instead of another
             ->setType($faker->randomElement(['restaurant', 'izakaya']))
-            ->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+            ->setPoster('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
             ->setRating($faker->randomFloat(1, 1, 5))
             ->setDistrict($districtsList[mt_rand(0, count($districtsList) - 1)])
             ->setStatus(mt_rand(0,2));

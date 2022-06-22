@@ -4,9 +4,11 @@ namespace App\Controller\Back;
 
 use App\Entity\District;
 use App\Entity\Establishment;
+use App\Entity\Picture;
 use App\Form\EstablishmentType;
 use App\Repository\DistrictRepository;
 use App\Repository\EstablishmentRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,16 +26,18 @@ class EstablishmentController extends AbstractController
     {
         return $this->render('establishment/index.html.twig', [
             'establishments' => $establishmentRepository->findAll(),
+            
         ]);
     }
 
     /**
      * @Route("/{id}", name="back_establishment_show", methods={"GET"}, requirements={"id"="\d+"})
      */
-    public function show(Establishment $establishment): Response
+    public function show(Establishment $establishment, Picture $picture): Response
     {
         return $this->render('establishment/show.html.twig', [
             'establishment' => $establishment,
+            'pictures' => $picture,
         ]);
     }
 
@@ -94,7 +98,40 @@ class EstablishmentController extends AbstractController
             'establishments' => $orderByDistrictList,
         ]);
     }
-   
+    /**
+     * @Route("/orderbystatusasc", name="back_establishment_orderByStatusASC", methods={"GET"})
+     */
+    public function orderByStatus(EstablishmentRepository $establishmentRepository): Response
+    {
+        $orderByStatusList = $establishmentRepository->findAllOrderedByStatusAsc();
+        return $this->render('establishment/index.html.twig', [
+            'establishments' => $orderByStatusList,
+        ]);
+    }
+
+    /**
+     * @Route("/status/{status}", name="back_establishment_listByStatus", methods={"GET"}) 
+     */
+    public function listByStatus(EstablishmentRepository $establishmentRepository, Establishment $establishment): Response
+    {   
+        $establishmentStatus = $establishment->getStatus();
+        $establishmentByStatus = $establishmentRepository->findByStatus($establishmentStatus);
+        return $this->render('establishment/index.html.twig', [
+            'establishments' => $establishmentByStatus,
+            'Location' => 'App\Entity\Establishment',
+        ]);
+    }
+    /**
+     * @Route("/status/{status}", name="back_establishment_listByStatus0", methods={"GET"}) 
+     */
+    public function listByStatus0(EstablishmentRepository $establishmentRepository): Response
+    {   
+        $establishmentByStatus0 = $establishmentRepository->findByStatus0();
+        return $this->render('establishment/index.html.twig', [
+            'establishments' => $establishmentByStatus0,
+            'Location' => 'App\Entity\Establishment',
+        ]);
+    }
 
     /**
      * @Route("/{type}", name="back_establishment_listByType", methods={"GET"})
@@ -127,6 +164,7 @@ class EstablishmentController extends AbstractController
             'form' => $form,
         ]);
     }
+    
 
     /**
      * @Route("/district/{district}", name="back_establishment_listByDistrict", methods={"GET"}) 
@@ -140,4 +178,5 @@ class EstablishmentController extends AbstractController
             'Location' => 'App\Entity\Establishment',
         ]);
     }
+    
 }

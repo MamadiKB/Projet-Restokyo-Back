@@ -29,7 +29,7 @@
             <a class="nav-link" href="#">Accès ResTokyo</a>
         </li>
         <li class="nav-item">
-            <span class="nav-link disabled">{{ app.user.username }}</span>
+            <span class="nav-link disabled">{{ app.user.pseudo }}</span>
         </li>        
         <li class="nav-item">
             <a class="nav-link" href="/logout">Déconnexion</a>
@@ -38,7 +38,7 @@
  
     <div class="text-center">
     <img class="img-fluid rounded mh-100 p-3" style="width: 400px; height: 300px;" src="../images/logo.png" alt="">
-    <h2 class="text-color-light">Bonjour {{ app.user.username }}</h2>
+    <h2 class="text-color-light">Bonjour {{ app.user.pseudo }}</h2>
     <h3>Bienvenue sur l'interface administrateur de ResTokyo</h3>
     </div>
     
