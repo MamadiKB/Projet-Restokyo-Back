@@ -167,7 +167,7 @@ class Establishment
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->tags = new ArrayCollection();https://symfony.com/doc/current/components/serializer.html#usage
+        $this->tags = new ArrayCollection(); //https://symfony.com/doc/current/components/serializer.html#usage
         $this->status = 0;
         $this->pictures = new ArrayCollection();
         $this->users = new ArrayCollection();

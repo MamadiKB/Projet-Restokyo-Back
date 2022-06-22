@@ -20,6 +20,7 @@ class AuthenticationSuccessListener
         'lastname' => $user->getLastname(),
         'firstname' => $user->getFirstname(),
         'username' => $user->getUserIdentifier(),
+        'pseudo' => $user->getPseudo(),
         'email' => $user->getEmail(),
         'birthdate' => $user->getBirthdate(),
         'nationality' => $user->getNationality(),
