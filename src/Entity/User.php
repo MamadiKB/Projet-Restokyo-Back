@@ -57,9 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $age;
+    private $birthdate;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -164,6 +164,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getBirthdate(): ?\DateTime
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(?\DateTime $birthdate): self
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
     public function getNationality(): ?string
     {
         return $this->nationality;
@@ -260,26 +272,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->establishments->removeElement($establishment)) {
             $establishment->removeUser($this);
         }
-
-        return $this;
-    }
-
-    /**
-     * Get the value of age
-     */ 
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    /**
-     * Set the value of age
-     *
-     * @return  self
-     */ 
-    public function setAge($age)
-    {
-        $this->age = $age;
 
         return $this;
     }
