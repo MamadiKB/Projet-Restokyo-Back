@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\Entity\User;
 use App\Entity\Establishment;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -10,60 +12,40 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class FavoritesManager
 {
-    private $user;
+    // private $currentUser;
 
-    /** @var bool $emptyEnabled Authorise empty list */
-    private $emptyEnabled;
+    // public function __construct(Security $security)
+    // {
+    //     $this->currentUser = $security->getUser();
 
-    // Dans un service, on va utiliser RequestStack pour récupérer la Session
-    // @link https://symfony.com/doc/current/session.html#basic-usage
-    public function __construct(Establishment $establishment, $emptyEnabled)
-    {
-        $this->establishment = $establishment->getUsers();
-        $this->emptyEnabled = $emptyEnabled;
-    }
+    // }
 
-    /**
-     * Add or remove establishment in favorites list
-     * 
-     * @param Establishment $establishment
-     * 
-     * @return bool true if added, false if removed
-     */
-    public function toggle(Establishment $establishment): bool
-    {
-        $favorites = $this->establishment->getUsers();
+    // /**
+    //  * Add or remove movie in favorites list
+    //  * 
+    //  * @param Movie $movie
+    //  * 
+    //  * @return bool true if added, false if removed
+    //  */
+    // public function toggle(Movie $movie): bool
+    // {
+    //     $favorites = $this->session->get('favorites');
 
-        if ($favorites != null) {
+    //     if ($favorites != null) {
 
-            if (array_key_exists($establishment->getId(), $favorites)) {
+    //         if (array_key_exists($movie->getId(), $favorites)) {
 
-                unset($favorites[$establishment->getId()]);
+    //             unset($favorites[$movie->getId()]);
 
-                $this->establishment->getUsers();
+    //             $this->session->set('favorites', $favorites);
 
-                return false;
-            }
-        }
+    //             return false;
+    //         }
+    //     }
 
-        $favorites[$establishment->getId()] = $establishment;
+    //     $favorites[$movie->getId()] = $movie;
 
-        $this->establishment->getUsers();
-
-        return true;
-    }
-
-    /**
-     * Empty favorites list
-     */
-    public function empty()
-    {
-        // Si on autorise le vidage de la liste
-        if ($this->emptyEnabled) {
-            $this->establishment->getUsers()->remove();
-            return true;
-        }
-
-        return false;
-    }
+    //     $this->session->set('favorites', $favorites);
+    //     return true;
+    // }
 }
