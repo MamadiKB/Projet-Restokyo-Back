@@ -19,6 +19,7 @@ class AuthenticationSuccessListener
         'roles' => $user->getRoles(),
         'lastname' => $user->getLastname(),
         'firstname' => $user->getFirstname(),
+        'pseudo' => $user->getPseudo(),
         'username' => $user->getUserIdentifier(),
         'pseudo' => $user->getPseudo(),
         'email' => $user->getEmail(),

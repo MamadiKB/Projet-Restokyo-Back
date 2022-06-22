@@ -145,7 +145,7 @@ class AppFixtures extends Fixture
                     ->setContent($faker->realTextBetween(100, 300))
                     ->setRating($faker->randomFloat(1, 1, 5))
                     ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
-                    ->setUser($user->setPseudo($faker->userName()))
+                    ->setUser($user->setPseudo($faker->pseudo()))
                     ->setEstablishment($establishment->setName($faker->establishmentsName()));
 
                 $manager->persist($comment);

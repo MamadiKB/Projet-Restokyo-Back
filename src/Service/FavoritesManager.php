@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
-use App\Entity\Movie;
+use App\Entity\User;
+use App\Entity\Establishment;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Manage user favorites (movies and series) in session
@@ -44,7 +46,6 @@ class FavoritesManager
     //     $favorites[$movie->getId()] = $movie;
 
     //     $this->session->set('favorites', $favorites);
-
     //     return true;
     // }
 }
