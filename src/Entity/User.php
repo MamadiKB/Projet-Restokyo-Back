@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email", "username"})
+ * @UniqueEntity(fields={"email", "pseudo"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -42,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"establishment_get_data", "comments_get_list"})
      * 
      */
-    private $username;
+    private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -74,6 +76,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\Choice({"ROLE_USER", "ROLE_ADMIN"}, multiple=true)
      */
     private $roles = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Establishment::class, mappedBy="users")
+     */
+    private $establishments;
+
+    public function __construct()
+    {
+        $this->establishments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,12 +124,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function getPseudo(): string
     {
-        $this->username = $username;
+        return (string) $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
@@ -229,5 +246,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Establishment>
+     */
+    public function getEstablishments(): Collection
+    {
+        return $this->establishments;
+    }
+
+    public function addEstablishment(Establishment $establishment): self
+    {
+        if (!$this->establishments->contains($establishment)) {
+            $this->establishments[] = $establishment;
+            $establishment->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstablishment(Establishment $establishment): self
+    {
+        if ($this->establishments->removeElement($establishment)) {
+            $establishment->removeUser($this);
+        }
+
+        return $this;
     }
 }

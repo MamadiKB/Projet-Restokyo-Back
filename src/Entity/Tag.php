@@ -29,9 +29,16 @@ class Tag
 
     /**
      * @ORM\ManyToMany(targetEntity=Establishment::class, inversedBy="tags")
+     * @Groups({"tags_get_list"})
      * 
      */
     private $establishments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"tags_get_list"})
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -76,6 +83,18 @@ class Tag
     public function removeEstablishment(Establishment $establishment): self
     {
         $this->establishments->removeElement($establishment);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

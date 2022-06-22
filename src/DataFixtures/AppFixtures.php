@@ -13,17 +13,18 @@ use App\Entity\Establishment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\DataFixtures\Provider\RestokyoProvider;
+use App\Entity\Picture;
 use DateTime;
 use DateTimeInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
-    private $newSlugger;
+    private $slugger;
 
     public function __construct(SluggerInterface $slugger)
     {
-        $this->newSlugger = $slugger;
+        $this->slugger = $slugger;
     }
 
     public function load(ObjectManager $manager): void
@@ -48,7 +49,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setEmail('kurosaki@admin.com');
         $admin->setPassword('$2y$13$k.VR08yUFrLSDQ1FI5jCcet6alcnXTA74cmKaQt6im.bnkOZr4j2K');
-        $admin->setUsername('Fraise');
+        $admin->setPseudo('Fraise');
         $admin->setLastname('Kurosaki');
         $admin->setFirstname('Ichigo');
         $admin->setRoles(["ROLE_ADMIN"]);
@@ -61,7 +62,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('uzumaki@user.com');
         $user->setPassword('$2y$13$6i3S3bre3oIbVcQbXElJD.59eXfLCl7PKJ/QqFOm6IM/C5JqeRMi6');
-        $user->setUsername('Hokage');
+        $user->setPseudo('Hokage');
         $user->setLastname('Uzumaki');
         $user->setFirstname('Naruto');
         $user->setRoles(["ROLE_USER"]);
@@ -77,7 +78,8 @@ class AppFixtures extends Fixture
 
             // Creating a new tag and setting it as unique to avoid duplicates
             $tag = new Tag();
-            $tag->setName($faker->unique()->establishmentTag());
+            $tag->setName($faker->unique()->establishmentTag())
+            ->setSlug($this->slugger->slug($tag->getName())->lower());
 
             // Filling the array
             $tagsList[] = $tag;
@@ -109,20 +111,19 @@ class AppFixtures extends Fixture
 
         for ($e = 1; $e <= 40; $e++) {
             $establishment = new Establishment();
-            $establishment->setName($faker->unique()->establishmentName());
-            $establishment->setDescription($faker->text(100));
-            $establishment->setAddress($faker->address());
-            $establishment->setSlug($this->newSlugger->slug($establishment->getName())->lower());
-            // 1/2 chance to have a type instead of another
-            $establishment->setType($faker->randomElement(['restaurant', 'izakaya']));
-            $establishment->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300');
-            $establishment->setRating($faker->randomFloat(1, 1, 5));
-            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
-            $establishment->setDistrict($randomDistrict);
+            $establishment
+            ->setName($faker->unique()->establishmentsName())
+            ->setSlug($this->slugger->slug($establishment->getName())->lower())
+            ->setDescription($faker->text(100))
+            ->setAddress($faker->address())
+            
 
-            $randomDistrict = $districtsList[mt_rand(0, count($districtsList) - 1)];
-            $establishment->setDistrict($randomDistrict);
-            $establishment->setStatus(mt_rand(0,2));
+            // 1/2 chance to have a type instead of another
+            ->setType($faker->randomElement(['restaurant', 'izakaya']))
+            ->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+            ->setRating($faker->randomFloat(1, 1, 5))
+            ->setDistrict($districtsList[mt_rand(0, count($districtsList) - 1)])
+            ->setStatus(mt_rand(0,2));
 
 
             //!\ TAGS to ESTABLISHMENTS
@@ -135,7 +136,7 @@ class AppFixtures extends Fixture
 
             //!\ COMMENTS (and ratings) to ESTABLISHMENTS
             //TODO To activate when relation is done 
-            for ($j = 0; $j < mt_rand(15, 20); $j++) {
+            for ($c = 0; $c < mt_rand(0, 5); $c++) {
                 $comment = new Comment();
 
                 $comment
@@ -144,10 +145,22 @@ class AppFixtures extends Fixture
                     ->setContent($faker->realTextBetween(100, 300))
                     ->setRating($faker->randomFloat(1, 1, 5))
                     ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
-                    ->setUser($user->setUsername($faker->userName()))
-                    ->setEstablishment($establishment->setName($faker->establishmentName()));
+                    ->setUser($user->setPseudo($faker->userName()))
+                    ->setEstablishment($establishment->setName($faker->establishmentsName()));
 
                 $manager->persist($comment);
+            }
+
+            //!\ PICTURES TO ESTABLISHMENTS
+
+            for ($p = 0; $p < mt_rand(0, 5); $p++) {
+                $picture = new Picture();
+
+                $picture
+                ->setUrl('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+                ->setEstablishment($establishment->setName($faker->establishmentsName()));
+
+                $manager->persist($picture);
             }
 
             $manager->persist($establishment);

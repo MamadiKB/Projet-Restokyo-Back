@@ -20,12 +20,6 @@ class Comment
      */
     private $id;
 
-    // /**
-    //  * @ORM\Column(type="string", length=100)
-    //  * @Groups({"establishment_get_data"})
-    //  */
-    // private $username;
-
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"establishment_get_data", "comments_get_list"})
@@ -73,18 +67,6 @@ class Comment
     {
         return $this->id;
     }
-
-    // public function getUsername(): ?string
-    // {
-    //     return $this->username;
-    // }
-
-    // public function setUsername(string $username): self
-    // {
-    //     $this->username = $username;
-
-    //     return $this;
-    // }
 
     public function getPublishedAt(): ?\DateTimeImmutable
     {
