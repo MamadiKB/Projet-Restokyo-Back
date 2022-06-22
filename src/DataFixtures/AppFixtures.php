@@ -47,11 +47,11 @@ class AppFixtures extends Fixture
 
         // Users
         $admin = new User();
-        $admin->setEmail('kurosaki@admin.com');
-        $admin->setPassword('$2y$13$k.VR08yUFrLSDQ1FI5jCcet6alcnXTA74cmKaQt6im.bnkOZr4j2K');
-        $admin->setPseudo('Fraise');
-        $admin->setLastname('Kurosaki');
-        $admin->setFirstname('Ichigo');
+        $admin->setEmail('admin@admin.com');
+        $admin->setPassword('$2y$13$3oJfW6VsSt1jdYvRbR2mquUOHNwaeIVAmQNpwISuJNlt42n3aUnk2');
+        $admin->setPseudo('Admin');
+        $admin->setLastname('Admin');
+        $admin->setFirstname('Istrateur');
         $admin->setRoles(["ROLE_ADMIN"]);
         $manager->persist($admin);
 
@@ -60,11 +60,11 @@ class AppFixtures extends Fixture
         // // User
 
         $user = new User();
-        $user->setEmail('uzumaki@user.com');
-        $user->setPassword('$2y$13$6i3S3bre3oIbVcQbXElJD.59eXfLCl7PKJ/QqFOm6IM/C5JqeRMi6');
-        $user->setPseudo('Hokage');
-        $user->setLastname('Uzumaki');
-        $user->setFirstname('Naruto');
+        $user->setEmail('user@user.com');
+        $user->setPassword('$2y$13$YFF2hSfUoYUvlYUlIXa8kuXQnH1GMVF4zBJwg3lZqgxei65rPlmQC');
+        $user->setPseudo('Utilisateur');
+        $user->setLastname('User');
+        $user->setFirstname('Ufrer');
         $user->setRoles(["ROLE_USER"]);
         $manager->persist($user);
 

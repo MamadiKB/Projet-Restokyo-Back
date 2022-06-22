@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Establishment;
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,6 +39,20 @@ class TagRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+//     /**
+//     * @return Tag[] Returns an array of Tag objects
+//     */
+//    public function findEstablishmentsByStatus($status): array
+//    {
+//        return $this->createQueryBuilder('t')
+//             ->innerJoin(Establishment::class, 'e')
+//             ->where('e.id = t.establishments.status')
+//             ->andWhere('e.status = :status')
+//             ->setParameter('status', $status)
+//             ->getQuery()
+//             ->getResult();
+//    }
 
 //    /**
 //     * @return Tag[] Returns an array of Tag objects

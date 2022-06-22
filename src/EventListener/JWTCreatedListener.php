@@ -18,7 +18,12 @@ class JWTCreatedListener
      */
     private $requestStack;
 
-    private UserInterface $user;
+    /**
+     * @var UserInterface
+     */
+    private $user;
+
+    
    
     /**
      * @param RequestStack $requestStack
@@ -46,8 +51,9 @@ class JWTCreatedListener
         /*$payload['exp'] = $expiration->getTimestamp();   */     
         $payload['ip'] = $request->getClientIps();
         $payload['URI'] = $request->getUri();
-        $payload['URI Request'] = $request->getRequestUri();
+        $payload['URI Request'] = $request->getRequestUri();        
 
+        $payload['id'] = $this->user->getId();
         $payload['lastname'] = $this->user->getLastname();
         $payload['firstname'] = $this->user->getFirstname();
         $payload['pseudo'] = $this->user->getPseudo();

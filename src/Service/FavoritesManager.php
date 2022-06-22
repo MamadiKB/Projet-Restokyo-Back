@@ -17,6 +17,7 @@ class FavoritesManager
     // public function __construct(Security $security)
     // {
     //     $this->currentUser = $security->getUser();
+
     // }
 
     // /**
@@ -26,9 +27,9 @@ class FavoritesManager
     //  * 
     //  * @return bool true if added, false if removed
     //  */
-    // public function toggle(User $user): bool
+    // public function toggle(Movie $movie): bool
     // {
-    //     $favorites = $this->security->getUser();
+    //     $favorites = $this->session->get('favorites');
 
     //     if ($favorites != null) {
 
@@ -45,7 +46,6 @@ class FavoritesManager
     //     $favorites[$movie->getId()] = $movie;
 
     //     $this->session->set('favorites', $favorites);
-
     //     return true;
     // }
 }

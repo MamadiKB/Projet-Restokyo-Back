@@ -21,6 +21,7 @@ class AuthenticationSuccessListener
         'firstname' => $user->getFirstname(),
         'pseudo' => $user->getPseudo(),
         'username' => $user->getUserIdentifier(),
+        'pseudo' => $user->getPseudo(),
         'email' => $user->getEmail(),
         'birthdate' => $user->getBirthdate(),
         'nationality' => $user->getNationality(),
