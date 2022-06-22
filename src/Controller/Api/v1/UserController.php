@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Component\Security\Core\Security;
 
 /**    
  * Class used to deal datas from User
@@ -80,7 +79,7 @@ class UserController extends AbstractController
         if (!empty($jsonDecode->password)){
             $user->setPassword($jsonDecode->password);
         }
-        $user->setUsername($jsonDecode->username);
+        $user->setPseudo($jsonDecode->pseudo);
         $user->setFirstname($jsonDecode->firstname);
         $user->setLastname($jsonDecode->lastname);
         $user->setNationality($jsonDecode->nationality);

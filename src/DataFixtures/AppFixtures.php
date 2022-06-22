@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setEmail('kurosaki@admin.com');
         $admin->setPassword('$2y$13$k.VR08yUFrLSDQ1FI5jCcet6alcnXTA74cmKaQt6im.bnkOZr4j2K');
-        $admin->setUsername('Fraise');
+        $admin->setPseudo('Fraise');
         $admin->setLastname('Kurosaki');
         $admin->setFirstname('Ichigo');
         $admin->setRoles(["ROLE_ADMIN"]);
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('uzumaki@user.com');
         $user->setPassword('$2y$13$6i3S3bre3oIbVcQbXElJD.59eXfLCl7PKJ/QqFOm6IM/C5JqeRMi6');
-        $user->setUsername('Hokage');
+        $user->setPseudo('Hokage');
         $user->setLastname('Uzumaki');
         $user->setFirstname('Naruto');
         $user->setRoles(["ROLE_USER"]);
@@ -145,7 +145,7 @@ class AppFixtures extends Fixture
                     ->setContent($faker->realTextBetween(100, 300))
                     ->setRating($faker->randomFloat(1, 1, 5))
                     ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
-                    ->setUser($user->setUsername($faker->userName()))
+                    ->setUser($user->setPseudo($faker->pseudo()))
                     ->setEstablishment($establishment->setName($faker->establishmentsName()));
 
                 $manager->persist($comment);
