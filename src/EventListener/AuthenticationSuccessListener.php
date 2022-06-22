@@ -23,7 +23,7 @@ class AuthenticationSuccessListener
         'username' => $user->getUserIdentifier(),
         'pseudo' => $user->getPseudo(),
         'email' => $user->getEmail(),
-        'birthdate' => $user->getBirthdate(),
+        'age' => $user->getAge(),
         'nationality' => $user->getNationality(),
         'picture' => $user->getPicture(),
 

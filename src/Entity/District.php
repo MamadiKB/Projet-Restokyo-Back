@@ -29,6 +29,12 @@ class District
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"establishment_get_data", "districts_get_list", "establishments_get_validated", "establishments_get_list"})
+     */
+    private $slug;
+
+    /**
      * @ORM\OneToMany(targetEntity=Establishment::class, mappedBy="district")
      * 
      */
@@ -92,5 +98,25 @@ class District
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get the value of slug
+     */ 
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set the value of slug
+     *
+     * @return  self
+     */ 
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

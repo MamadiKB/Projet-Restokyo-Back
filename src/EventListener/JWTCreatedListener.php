@@ -58,7 +58,7 @@ class JWTCreatedListener
         $payload['firstname'] = $this->user->getFirstname();
         $payload['pseudo'] = $this->user->getPseudo();
         $payload['email'] = $this->user->getEmail();
-        $payload['birthdate'] = $this->user->getBirthdate();
+        $payload['age'] = $this->user->getAge();
         $payload['nationality'] = $this->user->getNationality();
         $payload['picture'] = $this->user->getPicture();
 

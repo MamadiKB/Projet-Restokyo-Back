@@ -5,18 +5,18 @@ namespace App\Entity;
 use DateTime;
 use App\Entity\District;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Repository\EstablishmentRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=EstablishmentRepository::class)
  * 
  * @ORM\HasLifecycleCallbacks()
- * 
+ * @UniqueEntity(fields={"name"})
  * 
  */
 class Establishment
@@ -86,7 +86,7 @@ class Establishment
     private $website;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="bigint", length=14, nullable=true)
      * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $phone;
@@ -107,7 +107,7 @@ class Establishment
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data", "tags_get_establishments", "tags_get_list"})
      */
-    private $poster;
+    private $picture;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="establishment", orphanRemoval=true)
@@ -303,14 +303,14 @@ class Establishment
         return $this;
     }
 
-    public function getPoster(): ?string
+    public function getPicture(): ?string
     {
-        return $this->poster;
+        return $this->picture;
     }
 
-    public function setPOster(?string $poster): self
+    public function setPicture(?string $picture): self
     {
-        $this->poster = $poster;
+        $this->picture = $picture;
 
         return $this;
     }

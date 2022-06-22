@@ -42,7 +42,7 @@ class EstablishmentController extends AbstractController
      */
     public function establishmentsGetBest3(EstablishmentRepository $establishmentRepository)
     {
-        $establishmentsList = $establishmentRepository->findBestRatingDsc();
+        $establishmentsList = $establishmentRepository->findBestRatingDesc();
 
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_validated']);
     }

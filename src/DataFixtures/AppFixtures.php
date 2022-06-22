@@ -96,7 +96,8 @@ class AppFixtures extends Fixture
 
             // Creating a new district and setting it as unique to avoid duplicates
             $district = new District();
-            $district->setName($faker->unique()->districtsName());
+            $district->setName($faker->unique()->districtsName())
+            ->setSlug($this->slugger->slug($district->getName())->lower());
 
             // Filling the array
             $districtsList[] = $district;
@@ -116,11 +117,12 @@ class AppFixtures extends Fixture
             ->setSlug($this->slugger->slug($establishment->getName())->lower())
             ->setDescription($faker->text(100))
             ->setAddress($faker->address())
+            ->setPhone('010203040506')
             
 
             // 1/2 chance to have a type instead of another
-            ->setType($faker->randomElement(['restaurant', 'izakaya']))
-            ->setPoster('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
+            ->setType($faker->randomElement(['Restaurant', 'Izakaya']))
+            ->setPicture('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
             ->setRating($faker->randomFloat(1, 1, 5))
             ->setDistrict($districtsList[mt_rand(0, count($districtsList) - 1)])
             ->setStatus(mt_rand(0,2));
@@ -146,7 +148,7 @@ class AppFixtures extends Fixture
                     ->setRating($faker->randomFloat(1, 1, 5))
                     ->setPicture($faker->randomElement(['https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300', null]))
                     ->setUser($user->setPseudo($faker->userName()))
-                    ->setEstablishment($establishment->setName($faker->establishmentsName()));
+                    ->setEstablishment($establishment);
 
                 $manager->persist($comment);
             }
@@ -158,7 +160,7 @@ class AppFixtures extends Fixture
 
                 $picture
                 ->setUrl('https://picsum.photos/id/' . $faker->numberBetween(1, 100) . '/450/300')
-                ->setEstablishment($establishment->setName($faker->establishmentsName()));
+                ->setEstablishment($establishment);
 
                 $manager->persist($picture);
             }

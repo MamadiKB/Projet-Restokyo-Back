@@ -57,9 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $birthdate;
+    private $age;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -164,14 +164,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTime
+    public function getAge()
     {
-        return $this->birthdate;
+        return $this->age;
     }
 
-    public function setBirthdate(?\DateTime $birthdate): self
+    public function setAge($age): self
     {
-        $this->birthdate = $birthdate;
+        $this->age = $age;
 
         return $this;
     }
