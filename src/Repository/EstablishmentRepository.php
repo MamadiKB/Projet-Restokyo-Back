@@ -60,6 +60,7 @@ class EstablishmentRepository extends ServiceEntityRepository
     */
     public function findByStatus($status): array
     {
+        
         return $this->createQueryBuilder('e')
             ->where('e.status = :status')
             ->setParameter('status', $status)
@@ -68,6 +69,29 @@ class EstablishmentRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+   /**
+    * @return Establishment[] Returns an array of Establishment objects
+    */
+    public function findByStatus0(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.status = 0')
+            ->orderBy('e.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+    * Find all ordered by status ASC
+    */
+   public function findAllOrderedByStatusAsc()
+   {    
+        return $this->createQueryBuilder('e')
+        ->orderBy('e.status', 'ASC')
+        ->getQuery()
+        ->getResult();
+   }
     
     /**
     * Find all ordered by type ASC
@@ -108,7 +132,7 @@ class EstablishmentRepository extends ServiceEntityRepository
     /**
      * Find best rating limit 3
      */
-    public function findBestRatingDsc()
+    public function findBestRatingDesc()
     {
         return $this->createQueryBuilder('e')
         ->andWhere('e.status = 1')

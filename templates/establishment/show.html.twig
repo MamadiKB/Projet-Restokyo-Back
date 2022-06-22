@@ -17,12 +17,27 @@
                 <td>{{ establishment.name }}</td>
             </tr>
             <tr>
+                <th>Poster</th>
+                <td><img src="{{ establishment.poster }}"></td>
+            </tr>
+            <tr>
                 <th>Picture</th>
-                <td><img src="{{ establishment.picture }}"></td>
+                
+                
+                <td>
+                {% for picture in establishment.pictures %}
+                <img src="{{ picture.url }}" alt="">
+                {% endfor %}</td>
             </tr>
             <tr>
                 <th>Type</th>
                 <td>{{ establishment.type }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>{% for tag in establishment.tags %}
+                    "{{ tag.name }}"
+                {% endfor %}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -46,7 +61,11 @@
             </tr>
             <tr>
                 <th>Opening days</th>
-                <td>{{ establishment.openingdays }}</td>
+                <td>{{ establishment.openingtime }}</td>
+            </tr>
+            <tr>
+                <th>updatedAt</th>
+                <td>{{ establishment.updatedAt }}</td>
             </tr>
             <tr>
                 <th>Statut</th>
