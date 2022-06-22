@@ -7,6 +7,7 @@ use App\Entity\Establishment;
 use App\Form\EstablishmentType;
 use App\Repository\DistrictRepository;
 use App\Repository\EstablishmentRepository;
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ class EstablishmentController extends AbstractController
     {
         return $this->render('establishment/index.html.twig', [
             'establishments' => $establishmentRepository->findAll(),
+            
         ]);
     }
 
