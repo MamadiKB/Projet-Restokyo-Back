@@ -85,6 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->establishments = new ArrayCollection();
+        $this->picture = "https://i.pinimg.com/236x/a7/c8/16/a7c8160be69a3135f496df24290d000f.jpg";
     }
 
     public function getId(): ?int
