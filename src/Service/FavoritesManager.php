@@ -10,40 +10,41 @@ use Symfony\Component\Security\Core\Security;
  */
 class FavoritesManager
 {
-    private $currentUser;
+    // private $currentUser;
 
-    public function __construct(Security $security)
-    {
-        $this->currentUser = $security->getUser();
-    }
+    // public function __construct(Security $security)
+    // {
+    //     $this->currentUser = $security->getUser();
 
-    /**
-     * Add or remove movie in favorites list
-     * 
-     * @param Movie $movie
-     * 
-     * @return bool true if added, false if removed
-     */
-    public function toggle(Movie $movie): bool
-    {
-        $favorites = $this->session->get('favorites');
+    // }
 
-        if ($favorites != null) {
+    // /**
+    //  * Add or remove movie in favorites list
+    //  * 
+    //  * @param Movie $movie
+    //  * 
+    //  * @return bool true if added, false if removed
+    //  */
+    // public function toggle(Movie $movie): bool
+    // {
+    //     $favorites = $this->session->get('favorites');
 
-            if (array_key_exists($movie->getId(), $favorites)) {
+    //     if ($favorites != null) {
 
-                unset($favorites[$movie->getId()]);
+    //         if (array_key_exists($movie->getId(), $favorites)) {
 
-                $this->session->set('favorites', $favorites);
+    //             unset($favorites[$movie->getId()]);
 
-                return false;
-            }
-        }
+    //             $this->session->set('favorites', $favorites);
 
-        $favorites[$movie->getId()] = $movie;
+    //             return false;
+    //         }
+    //     }
 
-        $this->session->set('favorites', $favorites);
+    //     $favorites[$movie->getId()] = $movie;
 
-        return true;
-    }
+    //     $this->session->set('favorites', $favorites);
+
+    //     return true;
+    // }
 }
