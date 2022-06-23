@@ -3,9 +3,9 @@
 {% block title %}New Establishment{% endblock %}
 
 {% block body_back %}
-    <h1>Create new Establishment</h1>
+    <h1>Ajouter un nouvel établissement</h1>
 
     {{ include('establishment/_form.html.twig') }}
 
-    <a href="{{ path('back_establishment_index') }}">back to list</a>
+    <a href="{{ path('back_establishment_index') }}" class="btn btn-info">Retour à la liste des établissements</a>
 {% endblock %}

@@ -159,7 +159,7 @@ class EstablishmentController extends AbstractController
             return $this->redirectToRoute('back_establishment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('establishment/new.html.twig', [
+        return $this->renderForm('establishment/edit.html.twig', [
             'establisment' => $establishment,
             'form' => $form,
         ]);

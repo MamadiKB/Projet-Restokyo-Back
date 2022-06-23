@@ -30,12 +30,7 @@ class UserType extends AbstractType
             ])
             ->add('firstname', TextType::class, [
                 'required' => false,
-            ])
-            ->add('birthdate', DateType::class, [
-                'years' => range(date('Y') + 5, 1895),
-                'required' => false,
-
-            ])
+            ])           
             ->add('nationality', TextType::class, [
                 'required' => false,
             ])
@@ -48,10 +43,6 @@ class UserType extends AbstractType
                     'Membre' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN',
                 ],
-                // Choix multiple
-                'multiple' => false,
-                // Des boutons radios
-                'expanded' => true,
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 // User

@@ -449,7 +449,7 @@ class Establishment
     public function setUpdatedAtValue()
     {
         // Date courante
-        $this->updatedAt = new DateTime();
+        //$this->updatedAt = new DateTime();
     }
 
     /**

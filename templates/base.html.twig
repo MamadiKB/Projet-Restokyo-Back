@@ -24,8 +24,9 @@
 
     <!-- Sous-nav (back-office) -->
     {% block subnav %}
-        
-        <a href="{{ path('menu') }}"><img class="rounded float-start mh-100 p-3" style="width: 200px; height: 200px;" src="./images/logo.png" alt=""></a>
+    
+        <nav class="navbar navbar-expand-lg">
+        <a href="{{ path('menu') }}"><img class="navbar-brand flex-start mh-100 p-3" style="width: 150px; height: 150px;" src="{{ asset('images/logo.png') }}" alt=""></a>
         <ul class="nav container justify-content-end">
             <li class="nav-item">
                 <a class="nav-link" href="#">Accès ResTokyo</a>
@@ -48,17 +49,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Déconnexion</a>
             </li>
-        </ul>
+        
         {% endif %}
+        </ul>
+        </nav>
     {% endblock %}
 
     <!-- main -->
     {% block body %}{% block body_back %}{% endblock %}{% endblock %}
 
     <!-- footer -->
-    <footer class="container-fluid py-4 border-top text-center">
+    {# <footer class="container-fluid py-4 border-top text-center">
         
-    </footer>
+    </footer> #}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"

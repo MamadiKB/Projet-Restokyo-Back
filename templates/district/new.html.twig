@@ -3,9 +3,9 @@
 {% block title %}New District{% endblock %}
 
 {% block body_back %}
-    <h1>Create new District</h1>
+    <h1>Créer un nouveau district</h1>
 
     {{ include('district/_form.html.twig') }}
 
-    <a href="{{ path('back_district_index') }}">back to list</a>
+    <a href="{{ path('back_district_index') }}" class="btn btn-info">Retour à la liste des districts</a>
 {% endblock %}
