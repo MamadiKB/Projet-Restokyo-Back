@@ -23,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishments_get_validated"})
      */
     private $id;
 
@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Groups({"establishment_get_data", "comments_get_list"})
+     * @Groups({"establishments_get_validated", "comments_get_list"})
      * 
      */
     private $pseudo;
@@ -57,9 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $firstname;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $age;
+    private $birthdate;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -68,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"establishments_get_validated", "comments_get_list"})
      */
     private $picture;
 
@@ -164,14 +165,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAge()
+    public function getBirthdate(): ?\DateTime
     {
-        return $this->age;
+        return $this->birthdate;
     }
 
-    public function setAge($age): self
+    public function setBirthdate(?\DateTime $birthdate): self
     {
-        $this->age = $age;
+        $this->birthdate = $birthdate;
 
         return $this;
     }
