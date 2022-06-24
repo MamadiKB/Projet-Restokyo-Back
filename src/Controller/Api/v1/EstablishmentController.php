@@ -29,16 +29,22 @@ class EstablishmentController extends AbstractController
 {
 
     /**
+     * Method used to show all the establishments with a status == 1
+     * 
      * @Route("/establishments", name="establishments_get_validated_list", methods={"GET"})
      */
     public function establishmentsGetValidatedList(EstablishmentRepository $establishmentRepository)
     {
+        // Looking for the "findByStatus" method into the EstablishmentRepository (call by $establishmentRepository)
         $establishmentsList = $establishmentRepository->findByStatus(1);
 
+        // Sending the datas as a json format
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_validated']);
     }
 
     /**
+     * Method used to show the 3 establishments with the best rating
+     * 
      * @Route("/establishments/best", name="establishments_get_list", methods={"GET"})
      * 
      */
@@ -50,6 +56,8 @@ class EstablishmentController extends AbstractController
     }
 
     /**
+     * Method used to show all datas of a specific establishment (by id)
+     * 
      * @Route("/establishments/{id}", name="establishment_get_data", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function establishmentsGetData(Establishment $establishment = null)
@@ -63,6 +71,8 @@ class EstablishmentController extends AbstractController
     }
 
     /**
+     * Method used to offer the possibility to the custom to propose an establishment missing in our database
+     * 
      * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
      * @IsGranted("ROLE_USER")
      */
@@ -118,6 +128,8 @@ class EstablishmentController extends AbstractController
     }
 
     /**
+     * Method used to sort establishments by type ("restaurant" or "izakaya")
+     * 
      * @Route("/establishments/{type}", name="establishment_get_by_type", methods={"GET"})
      * 
      */
