@@ -74,7 +74,7 @@ class Tag
     {
         if (!$this->establishments->contains($establishment)) {
             $this->establishments[] = $establishment;
-            
+            $establishment->addTag($this);            
         }
 
         return $this;
@@ -82,7 +82,9 @@ class Tag
 
     public function removeEstablishment(Establishment $establishment): self
     {
-        $this->establishments->removeElement($establishment);
+        if ($this->establishments->removeElement($establishment)) {
+            $establishment->removeTag($this);
+        }
 
         return $this;
     }
