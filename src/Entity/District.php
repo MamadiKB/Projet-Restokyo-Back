@@ -29,6 +29,12 @@ class District
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true))
+     * @Groups({"establishment_get_data", "districts_get_list", "establishments_get_validated", "establishments_get_list"})
+     */
+    private $kanji;
+
+    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"establishment_get_data", "districts_get_list", "establishments_get_validated", "establishments_get_list"})
      */
@@ -116,6 +122,26 @@ class District
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of kanji
+     */ 
+    public function getKanji()
+    {
+        return $this->kanji;
+    }
+
+    /**
+     * Set the value of kanji
+     *
+     * @return  self
+     */ 
+    public function setKanji($kanji)
+    {
+        $this->kanji = $kanji;
 
         return $this;
     }

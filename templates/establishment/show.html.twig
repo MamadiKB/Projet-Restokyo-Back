@@ -13,20 +13,20 @@
                 <td>{{ establishment.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th>Nom</th>
                 <td>{{ establishment.name }}</td>
             </tr>
             <tr>
-                <th>Poster</th>
-                <td><img src="{{ establishment.picture }}"></td>
+                <th>Photo principal</th>
+                <td><img class="picture__show-establishement" src="{{ establishment.picture }}"></td>
             </tr>
             <tr>
-                <th>Picture</th>
+                <th>Photos</th>
                 
                 
                 <td>
                 {% for picture in establishment.pictures %}
-                <img src="{{ picture.url }}" alt="">
+                <img class="picture__show-establishement" src="{{ picture.url }}" alt="">
                 {% endfor %}</td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                 <td>{{ establishment.type }}</td>
             </tr>
             <tr>
-                <th>Tags</th>
+                <th>Spécialitées</th>
                 <td>{% for tag in establishment.tags %}
                     "{{ tag.name }}"
                 {% endfor %}</td>
@@ -60,15 +60,15 @@
                 <td>{{ establishment.price }}</td>
             </tr>
             <tr>
-                <th>Rating</th>
+                <th>Note</th>
                 <td>{{ establishment.rating }}</td>
             </tr>
             <tr>
-                <th>Opening days</th>
+                <th>Jours et horraires d'ouverture</th>
                 <td>{{ establishment.openingtime }}</td>
             </tr>
             <tr>
-                <th>updatedAt</th>
+                <th>Mis à jour</th>
                 <td>{{ establishment.updatedAt }}</td>
             </tr>
             <tr>
