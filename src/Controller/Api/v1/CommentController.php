@@ -57,7 +57,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Ajout d'un commentaire à un établissement
+     * Method permit to add a comment to a specified establishment
      * 
      * @Route("/establishment/{id}/comments", name="addComment", methods={"POST"})
      */
@@ -90,8 +90,8 @@ class CommentController extends AbstractController
         }
 
         // Put the current user in the comment
-        //$user = $security->getUser();
-        $user = $userRepository->find(1);
+        $user = $security->getUser();
+        //$user = $userRepository->find(1);
         $comment->setUser($user);
         $comment->setEstablishment($establishment);
 
