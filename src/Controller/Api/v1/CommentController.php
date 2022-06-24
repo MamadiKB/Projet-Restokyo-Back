@@ -90,8 +90,8 @@ class CommentController extends AbstractController
         }
 
         // Put the current user in the comment
-        //$user = $security->getUser();
-        $user = $userRepository->find(1);
+        $user = $security->getUser();
+        //$user = $userRepository->find(1);
         $comment->setUser($user);
         $comment->setEstablishment($establishment);
 

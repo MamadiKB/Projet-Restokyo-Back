@@ -2,19 +2,21 @@
 
 namespace App\Controller\Api\v1;
 
+use App\Entity\Tag;
 use App\Entity\District;
 use App\Entity\Establishment;
-use App\Entity\Tag;
-use App\Repository\EstablishmentRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\EstablishmentRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 
@@ -52,7 +54,7 @@ class EstablishmentController extends AbstractController
      */
     public function establishmentsGetData(Establishment $establishment = null)
     {
-        
+
         if ($establishment === null) {
             return $this->json(['error' => 'Etablissement inexistant (pour le moment !)'], Response::HTTP_NOT_FOUND);
         }
@@ -60,55 +62,69 @@ class EstablishmentController extends AbstractController
         return $this->json($establishment, Response::HTTP_OK, [], ['groups' => 'establishment_get_data']);
     }
 
-    // /**
-    //  * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
-    //  */
-    // public function establishmentsPostItem(Request $request,
-    // SerializerInterface $serializer,
-    // ManagerRegistry $doctrine,
-    // ValidatorInterface $validator)
-    // {
-        
-    //     $jsonContent = $request->getContent();
-    //     $establishment = $serializer->deserialize($jsonContent, Establishment::class, 'json');
-    //     $errors = $validator->validate($establishment);
+    /**
+     * @Route("/establishments", name="establishment_set_data", methods={"POST"}, requirements={"id"="\d+"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function establishmentsPostItem(
+        Request $request,
+        SerializerInterface $serializer,
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator,
+        Security $security
+    ) {
 
-    //     if (count($errors) > 0) {
-    //         $cleanErrors = [];
+        $jsonContent = $request->getContent();
+        $establishment = $serializer->deserialize($jsonContent, Establishment::class, 'json');
+        $errors = $validator->validate($establishment);
 
-    //         /** @var ConstraintViolation $error */
-    //         foreach ($errors as $error) {
+        if (count($errors) > 0) {
+            $cleanErrors = [];
 
-    //             $property = $error->getPropertyPath();
-    //             $message = $error->getMessage();
-    //             $cleanErrors[$property][] = $message;
-    //             // array_push($cleanErrors[$property], $message);
-    //         }
+            /** @var ConstraintViolation $error */
+            foreach ($errors as $error) {
 
-    //         return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
-    //     }
+                $property = $error->getPropertyPath();
+                $message = $error->getMessage();
+                $cleanErrors[$property][] = $message;
+            }
 
-    //     // Saving into DB
-    //     $em = $doctrine->getManager();
-    //     $em->persist($establishment);
-    //     $em->flush();
+            return $this->json($cleanErrors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-    //     return $this->json($establishment, Response::HTTP_CREATED, [
-    //             'Location' => $this->generateUrl('api_v1_establishments_get_list', [
-    //                 'id' => $establishment->getId()
-    //                 ]
-    //             )
-    //         ], ['groups' => 'establishments_get_list']
-    //     );
-    // }
+        // Put the current user in the form
+        $user = $security->getUser();
+        //$user = $userRepository->find(1);
+        $establishment->getUsers($user);
+
+        // Saving into DB
+        $em = $doctrine->getManager();
+        $em->persist($establishment);
+        $em->flush();
+
+        return $this->json(
+            $establishment,
+            Response::HTTP_CREATED,
+            [
+                'Location' => $this->generateUrl(
+                    'api_v1_establishments_get_list',
+                    [
+                        'id' => $establishment->getId()
+                    ]
+                )
+            ],
+            ['groups' => 'establishments_get_list']
+        );
+    }
 
     /**
      * @Route("/establishments/{type}", name="establishment_get_by_type", methods={"GET"})
      * 
      */
-    public function establishmentsGetListByType(Establishment $establishment,
-    EstablishmentRepository $establishmentRepository)
-    {
+    public function establishmentsGetListByType(
+        Establishment $establishment,
+        EstablishmentRepository $establishmentRepository
+    ) {
         $type = $establishment->getType();
         $establishmentsList = $establishmentRepository->findByType($type);
         return $this->json(['establishmentsList' => $establishmentsList], Response::HTTP_OK, [], ['groups' => 'establishments_get_list']);

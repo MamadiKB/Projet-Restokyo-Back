@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Groups({"establishments_get_validated", "comments_get_list"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
      * 
      */
     private $pseudo;
@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $birthdate;
+    private $age;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -165,14 +165,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTime
+    public function getAge()
     {
-        return $this->birthdate;
+        return $this->age;
     }
 
-    public function setBirthdate(?\DateTime $birthdate): self
+    public function setAge($age): self
     {
-        $this->birthdate = $birthdate;
+        $this->age = $age;
 
         return $this;
     }
