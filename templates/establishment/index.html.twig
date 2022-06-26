@@ -6,10 +6,10 @@
 
     <h1>Liste des établissements</h1>
 
+    <a href="{{ path('back_establishment_new') }}" class="btn btn-success mb-2">Ajouter un établissement</a>
     <a href="{{ path('back_establishment_index') }}" class="btn btn-info mb-2">Liste des établissements</a>
-    <a href="{{ path('back_establishment_new') }}" class="btn btn-warning mb-2">Ajouter un établissement</a>
     <a href="{{ path('back_establishment_listByStatus',{'status': 0}) }}" class="btn btn-warning mb-2">Liste des établissements à valider</a>
-    
+    <a href="{{ path('back_establishment_listByStatus',{'status': 2}) }}" class="btn btn-danger mb-2">Liste des établissements désactivé</a>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
