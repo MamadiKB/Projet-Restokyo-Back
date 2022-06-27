@@ -16,25 +16,25 @@ class Comment
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishment_get_data", "comments_get_list", "establishments_get_validated"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishments_get_validated"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishments_get_validated"})
      */
     private $published_at;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishments_get_validated"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
-     * @Groups({"establishments_get_validated", "establishment_get_data"})
+     * @Groups({"establishments_get_validated", "establishments_get_validated"})
      */
     private $rating;
 
@@ -54,7 +54,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishments_get_validated"})
      */
     private $user;
 
