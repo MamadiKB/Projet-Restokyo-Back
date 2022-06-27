@@ -29,7 +29,7 @@ class TagController extends AbstractController
      * 
      * Method used to add a new tag
      * 
-     * @Route("/new", name="back_tag_new", methods={"GET", "POST"})
+     * @Route("/ajouter", name="back_tag_new", methods={"GET", "POST"})
      */
     public function new(Request $request, TagRepository $tagRepository): Response
     {
@@ -41,7 +41,7 @@ class TagController extends AbstractController
 
             $tagRepository->add($tag);
             $this->addFlash('success', 'Spécialités ajouté.');
-            return $this->redirectToRoute('back_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_back_tag', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('tag/new.html.twig', [
@@ -68,7 +68,7 @@ class TagController extends AbstractController
      * 
      * Method used to edit a new tag
      * 
-     * @Route("/edit/{id}", name="back_tag_edit", methods={"GET", "POST"})
+     * @Route("/{id}/editer", name="back_tag_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Tag $tag, TagRepository $tagRepository): Response
     {
@@ -79,7 +79,7 @@ class TagController extends AbstractController
 
             $tagRepository->add($tag);
             $this->addFlash('success', 'spécialitée modifié.');
-            return $this->redirectToRoute('back_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_back_tag', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('tag/edit.html.twig', [
@@ -101,6 +101,6 @@ class TagController extends AbstractController
             $this->addFlash('success', 'Spécialitée supprimé.');
         }
 
-        return $this->redirectToRoute('back_tag_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_back_tag', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -31,7 +31,7 @@ class DistrictController extends AbstractController
      * 
      * Method used to add a new district
      * 
-     * @Route("/new", name="back_district_new", methods={"GET", "POST"})
+     * @Route("/ajouter", name="back_district_new", methods={"GET", "POST"})
      */
     public function new(Request $request, DistrictRepository $districtRepository): Response
     {
@@ -70,7 +70,7 @@ class DistrictController extends AbstractController
      * 
      * Method used to edit a new district
      * 
-     * @Route("/edit/{id}", name="back_district_edit", methods={"GET", "POST"})
+     * @Route("/{id}/editer", name="back_district_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, District $district, DistrictRepository $districtRepository): Response
     {

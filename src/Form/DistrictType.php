@@ -18,7 +18,8 @@ class DistrictType extends AbstractType
                 'label' => 'Nom du quartier'
             ])
             ->add('kanji', TextType::class, [
-                'label' => 'Nom en kanji'
+                'label' => 'Nom en kanji',
+                'required' => false,
             ])
         ;
     }
