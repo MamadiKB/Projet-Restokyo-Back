@@ -19,6 +19,30 @@
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Nom de famille</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ user.age }}</td>
+            </tr>
+            <tr>
+                <th>Nationalité</th>
+                <td>{{ user.nationality }}</td>
+            </tr>
+            <tr>
+                <th>Photo de profil</th>
+                <td>{{ user.picture }}</td>
+            </tr>
         </tbody>
     </table>
 
