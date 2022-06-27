@@ -14,6 +14,8 @@
 
     <!-- Our custom CSS -->
     <link rel="stylesheet" href="{{ asset('html-css/style.css') }}">
+    <!-- CSS custor for project ResTokyo -->
+    <link rel="stylesheet" href="{{ asset('html-css/restokyo.css') }}">
     <!-- favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
 
@@ -35,10 +37,13 @@
                 <a class="nav-link" href="/quartiers">Quartiers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/etablissement">Restaurants et Isakaya</a>
+                <a class="nav-link" href="/etablissements">Restaurants et Izakaya</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user">Utilisateurs</a>
+                <a class="nav-link" href="/specialites">Spécialités</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/profils">Utilisateurs</a>
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_ADMIN') %}

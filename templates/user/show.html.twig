@@ -3,13 +3,17 @@
 {% block title %}{{user.pseudo}}{% endblock %}
 
 {% block body_back %}
-    <h1>User</h1>
+    <h1>Utilisateur {{user.pseudo}}</h1>
 
     <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <td>{{ user.pseudo }}</td>
             </tr>
             <tr>
                 <th>Email</th>

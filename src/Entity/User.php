@@ -23,7 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishments_get_validated"})
      */
     private $id;
 
@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Groups({"establishment_get_data", "comments_get_list"})
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
      * 
      */
     private $pseudo;
@@ -68,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"establishments_get_validated", "comments_get_list"})
      */
     private $picture;
 

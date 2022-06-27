@@ -33,8 +33,8 @@ class EstablishmentType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    'Restaurant' => 'restaurant',
-                    'Isakaya' => 'isakaya',
+                    'Restaurant' => 'Restaurant',
+                    'Izakaya' => 'Izakaya',
                 ],
             ])
             ->add('description', TextareaType::class)
@@ -43,6 +43,7 @@ class EstablishmentType extends AbstractType
             ])
             ->add('district', EntityType::class, [
                 'class' => District::class,
+                'label' => 'Quartier',
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('d')
@@ -52,13 +53,14 @@ class EstablishmentType extends AbstractType
             ->add('status', ChoiceType::class, [
                 'label' => 'Statut',
                 'choices' =>[
-                    'A valider' => 0,
+                    'Proposé' => 0,
                     'Activé' => 1,
                     'Désactivé' => 2,
                 ]
             ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
+                'label' => 'Spécialités',
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
@@ -69,14 +71,20 @@ class EstablishmentType extends AbstractType
                 },
 
             ])
-            ->add('openingtime', TextareaType::class)
+            ->add('openingtime', TextareaType::class, [
+                'label' => 'Horaires d\'ouverture',
+            ])
             ->add('website', UrlType::class, [
+                'label' => 'Site web',
                 'required' => false,
             ])
             ->add('phone', IntegerType::class, [
+                'label' => 'Téléphone',
                 'required' => false,
             ])
-            ->add('picture', UrlType::class);
+            ->add('picture', UrlType::class, [
+                'label' => 'Photo',                
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
