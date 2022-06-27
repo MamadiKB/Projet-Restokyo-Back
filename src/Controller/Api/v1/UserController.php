@@ -66,7 +66,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @route ("/profils/{id}", name="user_edit", methods={"PUT"}, requirements={"id"="\d+"})
+     * @route ("/profils/{id}/edit", name="user_edit", methods={"PUT"}, requirements={"id"="\d+"})
      */
     public function userPutItem(User $user, Request $request,
     SerializerInterface $serializer,
