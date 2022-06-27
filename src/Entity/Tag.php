@@ -28,7 +28,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Establishment::class, inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Establishment::class, mappedBy="tags")
      * @Groups({"tags_get_list"})
      * 
      */
