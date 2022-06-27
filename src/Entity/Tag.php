@@ -50,11 +50,23 @@ class Tag
         return $this->id;
     }
 
+    /**
+     * Get name
+     *
+     * @return string
+     */ 
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Set name
+     *
+     * @param string $name Name
+     *
+     * @return self
+     */ 
     public function setName(string $name): self
     {
         $this->name = $name;

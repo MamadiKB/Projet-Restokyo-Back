@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
- * @Route("user")
+ * @Route("profils")
  */
 class UserController extends AbstractController
 {
@@ -28,7 +28,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="back_user_new", methods={"GET", "POST"})
+     * @Route("/ajouter", name="back_user_new", methods={"GET", "POST"})
      */
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -64,7 +64,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})
+     * @Route("/{id}/editer", name="back_user_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {

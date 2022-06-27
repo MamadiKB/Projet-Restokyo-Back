@@ -20,10 +20,10 @@
         {% for tag in tags %}
             <tr>
                 <td>{{ tag.id }}</td>
-                <td><a href="{{ path('app_back_tag', {'id': tag.id}) }}">{{ tag.name }}</a></td>
+                <td>{{ tag.name }}</td>
                 <td>
                     <a href="{{ path('back_tag_show', {'id': tag.id}) }}" class="btn btn-sm btn-primary">Détails</a>
-                    <a href="{{ path('app_back_tag', {'id': tag.id}) }}" class="btn btn-sm btn-success">Modifier</a>
+                    <a href="{{ path('back_tag_edit', {'id': tag.id}) }}" class="btn btn-sm btn-success">Modifier</a>
                 </td>
             </tr>
         {% else %}
