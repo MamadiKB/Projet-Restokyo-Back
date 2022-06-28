@@ -34,16 +34,16 @@
                 <a class="nav-link" href="#">Accès ResTokyo</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/quartiers">Quartiers</a>
+                <a class="nav-link" href="{{ path('back_district_index') }}">Quartiers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/etablissements">Restaurants et Izakaya</a>
+                <a class="nav-link" href="{{ path('back_establishment_index') }}">Restaurants et Izakaya</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/specialites">Spécialités</a>
+                <a class="nav-link" href="{{ path('app_back_tag') }}">Spécialités</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/profils">Utilisateurs</a>
+                <a class="nav-link" href="{{ path('back_user_index') }}">Utilisateurs</a>
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_ADMIN') %}
