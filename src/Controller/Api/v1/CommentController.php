@@ -57,7 +57,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * Method permit to add a comment to a specified establishment
+     * Method permitting to add a comment to a specified establishment
      * 
      * @Route("/establishment/{id}/comments", name="addComment", methods={"POST"})
      */
