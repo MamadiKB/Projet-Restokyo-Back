@@ -5,14 +5,13 @@ namespace App\Controller\Back;
 use App\Entity\District;
 use App\Form\DistrictType;
 use App\Repository\DistrictRepository;
-use App\Service\MySlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/back/quartiers")
+ * @Route("/quartiers")
  */
 class DistrictController extends AbstractController
 {
@@ -24,31 +23,17 @@ class DistrictController extends AbstractController
      */
     public function index(DistrictRepository $districtRepository): Response
     {
-        return $this->render('back/district/index.html.twig', [
+        return $this->render('district/index.html.twig', [
             'districts' => $districtRepository->findAll(),
         ]);
     }
-
-    /**
-     * 
-     * Method used to list establishments by districts
-     * 
-     * @Route("/{id}", name="back_district_show", methods={"GET"})
-     */
-    public function show(District $district): Response
-    {
-        return $this->render('back/district/show.html.twig', [
-            'district' => $district,
-        ]);
-    }
-
     /**
      * 
      * Method used to add a new district
      * 
      * @Route("/new", name="back_district_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, DistrictRepository $districtRepository, MySlugger $mySlugger): Response
+    public function new(Request $request, DistrictRepository $districtRepository): Response
     {
         $district = new District();
         $form = $this->createForm(DistrictType::class, $district);
@@ -61,19 +46,33 @@ class DistrictController extends AbstractController
             return $this->redirectToRoute('back_district_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/district/new.html.twig', [
+        return $this->renderForm('district/new.html.twig', [
             'district' => $district,
             'form' => $form,
         ]);
     }
+    /**
+     * 
+     * Method used to list establishments by districts
+     * 
+     * @Route("/{id}", name="back_district_show", methods={"GET"})
+     */
+    public function show(District $district): Response
+    {
+        return $this->render('district/show.html.twig', [
+            'district' => $district,
+        ]);
+    }
+
+    
 
     /**
      * 
      * Method used to edit a new district
      * 
-     * @Route("/{id}/edit", name="back_district_edit", methods={"GET", "POST"})
+     * @Route("/edit/{id}", name="back_district_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, District $district, DistrictRepository $districtRepository, MySlugger $mySlugger): Response
+    public function edit(Request $request, District $district, DistrictRepository $districtRepository): Response
     {
         $form = $this->createForm(DistrictType::class, $district);
         $form->handleRequest($request);
@@ -85,7 +84,7 @@ class DistrictController extends AbstractController
             return $this->redirectToRoute('back_district_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/district/edit.html.twig', [
+        return $this->renderForm('district/edit.html.twig', [
             'district' => $district,
             'form' => $form,
         ]);

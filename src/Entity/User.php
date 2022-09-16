@@ -3,22 +3,34 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email", "pseudo"})
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"establishments_get_validated"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank
+     * @Assert\Email
      */
     private $email;
 
@@ -28,9 +40,11 @@ class User
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Groups({"establishments_get_validated", "comments_get_list", "establishment_get_data"})
+     * 
      */
-    private $username;
+    private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -43,9 +57,9 @@ class User
     private $firstname;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $birthdate;
+    private $age;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -54,13 +68,26 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"establishments_get_validated", "comments_get_list"})
      */
     private $picture;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="json")
+     * @Assert\Choice({"ROLE_USER", "ROLE_ADMIN"}, multiple=true)
      */
-    private $role;
+    private $roles = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Establishment::class, mappedBy="users")
+     */
+    private $establishments;
+
+    public function __construct()
+    {
+        $this->establishments = new ArrayCollection();
+        $this->picture = "https://i.pinimg.com/236x/a7/c8/16/a7c8160be69a3135f496df24290d000f.jpg";
+    }
 
     public function getId(): ?int
     {
@@ -79,6 +106,9 @@ class User
         return $this;
     }
 
+     /**
+     * @see PasswordAuthenticatedUserInterface
+     */
     public function getPassword(): ?string
     {
         return $this->password;
@@ -91,14 +121,22 @@ class User
         return $this;
     }
 
-    public function getUsername(): ?string
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
     {
-        return $this->username;
+        return (string) $this->email;
     }
 
-    public function setUsername(string $username): self
+    public function getPseudo(): string
     {
-        $this->username = $username;
+        return (string) $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
@@ -127,14 +165,14 @@ class User
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTimeInterface
+    public function getAge()
     {
-        return $this->birthdate;
+        return $this->age;
     }
 
-    public function setBirthdate(?\DateTimeInterface $birthdate): self
+    public function setAge($age): self
     {
-        $this->birthdate = $birthdate;
+        $this->age = $age;
 
         return $this;
     }
@@ -163,14 +201,78 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->role;
+        return (string) $this->email;
     }
 
-    public function setRole(string $role): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->role = $role;
+        $roles = $this->roles;
+        
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Establishment>
+     */
+    public function getEstablishments(): Collection
+    {
+        return $this->establishments;
+    }
+
+    public function addEstablishment(Establishment $establishment): self
+    {
+        if (!$this->establishments->contains($establishment)) {
+            $this->establishments[] = $establishment;
+            $establishment->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstablishment(Establishment $establishment): self
+    {
+        if ($this->establishments->removeElement($establishment)) {
+            $establishment->removeUser($this);
+        }
 
         return $this;
     }
