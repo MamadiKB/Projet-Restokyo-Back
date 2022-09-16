@@ -111,7 +111,7 @@ class Establishment
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="establishment", orphanRemoval=true)
-     * @Groups({"establishment_get_data"})
+     * @Groups({"establishments_get_validated"})
      */
     private $comments;
 
@@ -124,7 +124,7 @@ class Establishment
     private $district;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="establishments")
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="establishments")
      * @Groups({"establishments_get_list", "establishments_get_validated", "establishment_get_data"})
      */
     private $tags;

@@ -28,7 +28,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Establishment::class, inversedBy="tags")
+     * @ORM\ManyToMany(targetEntity=Establishment::class, mappedBy="tags")
      * @Groups({"tags_get_list"})
      * 
      */
@@ -50,11 +50,23 @@ class Tag
         return $this->id;
     }
 
+    /**
+     * Get name
+     *
+     * @return string
+     */ 
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * Set name
+     *
+     * @param string $name Name
+     *
+     * @return self
+     */ 
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -74,7 +86,7 @@ class Tag
     {
         if (!$this->establishments->contains($establishment)) {
             $this->establishments[] = $establishment;
-            
+            $establishment->addTag($this);            
         }
 
         return $this;
@@ -82,7 +94,9 @@ class Tag
 
     public function removeEstablishment(Establishment $establishment): self
     {
-        $this->establishments->removeElement($establishment);
+        if ($this->establishments->removeElement($establishment)) {
+            $establishment->removeTag($this);
+        }
 
         return $this;
     }

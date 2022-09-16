@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/etablissement")
+ * @Route("/etablissements")
  */
 class EstablishmentController extends AbstractController
 {
@@ -42,7 +42,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="back_establishment_new", methods={"GET", "POST"})
+     * @Route("/ajouter", name="back_establishment_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EstablishmentRepository $establishmentRepository): Response
     {
@@ -146,7 +146,7 @@ class EstablishmentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="back_establishment_edit", methods={"GET", "POST"})
+     * @Route("/{id}/editer", name="back_establishment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Establishment $establishment, EstablishmentRepository $establishmentRepository): Response
     {

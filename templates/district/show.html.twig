@@ -15,10 +15,14 @@
             <tr>
                 <th>Nom</th>
                 <td>{{ district.name }}</td>
+            </tr>
+            <tr>
+                <th>Kanji</th>
+                <td>{{ district.kanji }}</td>
         </tbody>
     </table>
 
-    <a href="{{ path('back_district_index') }}" class="btn btn-info">Retour à la liste des districts</a>
+    <a href="{{ path('back_district_index') }}" class="btn btn-info">Retour à la liste des quartiers</a>
     
     <a href="{{ path('back_district_edit', {'id': district.id}) }}" class="btn btn-success">Modifier</a>
 

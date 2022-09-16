@@ -26,15 +26,19 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('pseudo', TextType::class)
             ->add('lastname', TextType::class, [
+                'label' => 'Nom de famille',
                 'required' => false,
             ])
             ->add('firstname', TextType::class, [
+                'label' => 'Prènom',
                 'required' => false,
             ])           
             ->add('nationality', TextType::class, [
+                'label' => 'Nationnalité',
                 'required' => false,
             ])
             ->add('picture', UrlType::class, [
+                'label' => 'Photo de profil',
                 'required' => false,
             ])
             ->add('roles', ChoiceType::class, [
@@ -55,6 +59,7 @@ class UserType extends AbstractType
                 if ($user->getId() === null) {
                     // Add (new)
                     $form->add('password', PasswordType::class, [
+                        'label' => 'Mot de passe',
                         'constraints' => [
                             new NotBlank(),
                             new Regex("/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*['_', '-', '|', '%', '&', '*', '=', '@', '$']).{8,}$/")
